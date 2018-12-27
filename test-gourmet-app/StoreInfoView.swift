@@ -20,9 +20,18 @@ class StoreInfoView : UIViewController, UITableViewDelegate, UITableViewDataSour
 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = storeInfoView.dequeueReusableCell(withIdentifier: "StoreCell", for: indexPath) as! StoreCell
+        cell.storeImage.layer.cornerRadius = cell.storeImage.frame.size.width * 0.1
+        cell.storeImage.clipsToBounds = true
+        
         cell.storeName.text = array2[indexPath.row]
         cell.storeImage.image = UIImage(named: "yudachi")
+        cell.timeRequired.text = "五反田駅から徒歩10分"
+        cell.address.text = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        cell.tel.text = "000-1111-1111"
+        cell.budget.text = "¥3,000"
+        
         return cell
     }
     
