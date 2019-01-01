@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--エリア選択-->
         <scene sceneID="TNP-tO-Ffb">
             <objects>
                 <viewController id="28H-GF-Om3" customClass="ViewController" customModule="test_gourmet_app" sceneMemberID="viewController">
@@ -45,7 +45,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Skp-Dy-a24"/>
                     </view>
-                    <navigationItem key="navigationItem" id="HF3-WB-SyS"/>
+                    <navigationItem key="navigationItem" title="エリア選択" id="HF3-WB-SyS"/>
                     <connections>
                         <outlet property="tableView" destination="fcj-v9-gJV" id="Pbp-HF-R93"/>
                     </connections>
