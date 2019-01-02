@@ -91,7 +91,8 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let storeInfoView = segue.destination as! StoreInfoView
-                storeInfoView.title = areaName[indexPath.row]
+                storeInfoView.areaname = areaName[indexPath.row]
+                storeInfoView.areacode = areaInTokyo[indexPath.row]["areacode_l"] as! String
             }
         }
     }
