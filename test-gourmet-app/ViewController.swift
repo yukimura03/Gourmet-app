@@ -25,7 +25,6 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
         tableView.delegate = self
         tableView.dataSource = self
     
-        
         let backButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem = backButtonItem
         
@@ -65,16 +64,13 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
             } catch {
                 print(error)
             }
-            
         })
         task.resume()
-    
     }
     
     func reloadData() {
         self.tableView.reloadData()
     }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return areaName.count
@@ -104,7 +100,5 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
             tableView.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
     }
-
-
 }
 
