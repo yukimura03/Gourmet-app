@@ -21,7 +21,7 @@ class StoreInfoView : UIViewController, UITableViewDelegate, UITableViewDataSour
     /// レストランデータ検索APIのアドレス。
     let urlString = "https://api.gnavi.co.jp/RestSearchAPI/v3/?"
     let id = "a6cababca853c93d265f18664e323093"
-    let hitPerPage = 10 // １ページに載せる店舗数
+    let hitPerPage = 50 // １ページに載せる店舗数
     var offsetPage = 1 // 何ページ目
     var areacode = "" // 前の画面で選んだエリアのエリアコードを受け取る
     
