@@ -139,7 +139,7 @@ class StoreInfoView : UIViewController, UITableViewDelegate, UITableViewDataSour
             
             return LoadingCell
         }
-    }
+    }   
     // ---ここまで---
     
     // 選択したセルの色を戻す

@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-
+    
     let urlString = "https://api.gnavi.co.jp/master/GAreaLargeSearchAPI/v3/?keyid=a6cababca853c93d265f18664e323093"
     var areaInTokyo = [[String: Any]]()
     var areaName = [String]()
@@ -84,7 +84,7 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail" {
+        if segue.identifier == "ShowDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let storeInfoView = segue.destination as! StoreInfoView
                 storeInfoView.areaname = areaName[indexPath.row]

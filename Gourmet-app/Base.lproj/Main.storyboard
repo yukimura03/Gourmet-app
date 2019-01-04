@@ -13,7 +13,7 @@
         <!--エリア選択-->
         <scene sceneID="TNP-tO-Ffb">
             <objects>
-                <viewController id="28H-GF-Om3" customClass="ViewController" customModule="test_gourmet_app" sceneMemberID="viewController">
+                <viewController id="28H-GF-Om3" customClass="ViewController" customModule="Gourmet_app" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="a3Q-05-Dea">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -30,7 +30,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="LN8-Sg-h3T" kind="show" identifier="showDetail" id="ftf-EG-cox"/>
+                                            <segue destination="LN8-Sg-h3T" kind="show" identifier="ShowDetail" id="Cnh-zS-8Gb"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -47,7 +47,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="エリア選択" id="HF3-WB-SyS"/>
                     <connections>
-                        <outlet property="tableView" destination="fcj-v9-gJV" id="Pbp-HF-R93"/>
+                        <outlet property="tableView" destination="fcj-v9-gJV" id="JrI-fL-MrF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ADL-qR-JhR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -57,7 +57,7 @@
         <!--Store Info View-->
         <scene sceneID="yUE-r0-vM9">
             <objects>
-                <viewController id="LN8-Sg-h3T" customClass="StoreInfoView" customModule="test_gourmet_app" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="LN8-Sg-h3T" customClass="StoreInfoView" customModule="Gourmet_app" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ybh-Is-OeS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -66,7 +66,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="StoreCell" rowHeight="175" id="WMy-FV-zR0" customClass="StoreCell" customModule="test_gourmet_app" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="StoreCell" rowHeight="175" id="WMy-FV-zR0" customClass="StoreCell" customModule="Gourmet_app" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="175"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WMy-FV-zR0" id="C7y-6o-QAz">
@@ -147,7 +147,7 @@
                                             <outlet property="timeRequired" destination="GuX-IS-PJn" id="7G5-ax-q2J"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LoadingCell" id="lpk-ZU-5bo" customClass="LoadingCell" customModule="test_gourmet_app" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LoadingCell" id="lpk-ZU-5bo" customClass="LoadingCell" customModule="Gourmet_app" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="203" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="lpk-ZU-5bo" id="XCy-LD-TnW">
@@ -184,7 +184,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="28H-GF-Om3" kind="relationship" relationship="rootViewController" id="cbR-oq-hea"/>
+                        <segue destination="28H-GF-Om3" kind="relationship" relationship="rootViewController" id="DXC-Dz-sMX"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uKi-aH-1fH" userLabel="First Responder" sceneMemberID="firstResponder"/>

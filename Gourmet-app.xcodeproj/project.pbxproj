@@ -19,7 +19,7 @@
 
 /* Begin PBXFileReference section */
 		49688CFD21DF505500027BD3 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
-		49B0854C21D3C87F00D68D85 /* test-gourmet-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "test-gourmet-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		49B0854C21D3C87F00D68D85 /* Gourmet-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gourmet-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49B0854F21D3C87F00D68D85 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		49B0855121D3C87F00D68D85 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		49B0855421D3C87F00D68D85 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -44,7 +44,7 @@
 		49B0854321D3C87F00D68D85 = {
 			isa = PBXGroup;
 			children = (
-				49B0854E21D3C87F00D68D85 /* test-gourmet-app */,
+				49B0854E21D3C87F00D68D85 /* Gourmet-app */,
 				49B0854D21D3C87F00D68D85 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,12 +52,12 @@
 		49B0854D21D3C87F00D68D85 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				49B0854C21D3C87F00D68D85 /* test-gourmet-app.app */,
+				49B0854C21D3C87F00D68D85 /* Gourmet-app.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		49B0854E21D3C87F00D68D85 /* test-gourmet-app */ = {
+		49B0854E21D3C87F00D68D85 /* Gourmet-app */ = {
 			isa = PBXGroup;
 			children = (
 				49B0854F21D3C87F00D68D85 /* AppDelegate.swift */,
@@ -70,15 +70,15 @@
 				49B0855821D3C88000D68D85 /* LaunchScreen.storyboard */,
 				49B0855B21D3C88000D68D85 /* Info.plist */,
 			);
-			path = "test-gourmet-app";
+			path = "Gourmet-app";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		49B0854B21D3C87F00D68D85 /* test-gourmet-app */ = {
+		49B0854B21D3C87F00D68D85 /* Gourmet-app */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 49B0855E21D3C88000D68D85 /* Build configuration list for PBXNativeTarget "test-gourmet-app" */;
+			buildConfigurationList = 49B0855E21D3C88000D68D85 /* Build configuration list for PBXNativeTarget "Gourmet-app" */;
 			buildPhases = (
 				49B0854821D3C87F00D68D85 /* Sources */,
 				49B0854921D3C87F00D68D85 /* Frameworks */,
@@ -88,9 +88,9 @@
 			);
 			dependencies = (
 			);
-			name = "test-gourmet-app";
+			name = "Gourmet-app";
 			productName = "test-gourmet-app";
-			productReference = 49B0854C21D3C87F00D68D85 /* test-gourmet-app.app */;
+			productReference = 49B0854C21D3C87F00D68D85 /* Gourmet-app.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -108,7 +108,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 49B0854721D3C87F00D68D85 /* Build configuration list for PBXProject "test-gourmet-app" */;
+			buildConfigurationList = 49B0854721D3C87F00D68D85 /* Build configuration list for PBXProject "Gourmet-app" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -121,7 +121,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				49B0854B21D3C87F00D68D85 /* test-gourmet-app */,
+				49B0854B21D3C87F00D68D85 /* Gourmet-app */,
 			);
 		};
 /* End PBXProject section */
@@ -296,12 +296,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KQ3HKVH899;
-				INFOPLIST_FILE = "test-gourmet-app/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Gourmet-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.test.company.test-gourmet-app";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.test.company.Gourmet-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -314,12 +314,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KQ3HKVH899;
-				INFOPLIST_FILE = "test-gourmet-app/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Gourmet-app/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.test.company.test-gourmet-app";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.test.company.Gourmet-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -329,7 +329,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		49B0854721D3C87F00D68D85 /* Build configuration list for PBXProject "test-gourmet-app" */ = {
+		49B0854721D3C87F00D68D85 /* Build configuration list for PBXProject "Gourmet-app" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49B0855C21D3C88000D68D85 /* Debug */,
@@ -338,7 +338,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		49B0855E21D3C88000D68D85 /* Build configuration list for PBXNativeTarget "test-gourmet-app" */ = {
+		49B0855E21D3C88000D68D85 /* Build configuration list for PBXNativeTarget "Gourmet-app" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				49B0855F21D3C88000D68D85 /* Debug */,
