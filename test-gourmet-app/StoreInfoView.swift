@@ -21,7 +21,8 @@ class StoreInfoView : UIViewController, UITableViewDelegate, UITableViewDataSour
     /// レストランデータ検索APIのアドレス。
     let urlString = "https://api.gnavi.co.jp/RestSearchAPI/v3/?"
     let id = "a6cababca853c93d265f18664e323093"
-    let hitPerPage = 50
+    let hitPerPage = 10 // １ページに載せる店舗数
+    var offsetPage = 1 // 何ページ目
     var areacode = "" // 前の画面で選んだエリアのエリアコードを受け取る
     
     var areaname = "" // 前の画面で選んだエリアの名前を受け取る
@@ -31,7 +32,7 @@ class StoreInfoView : UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.storeInfoView.estimatedRowHeight = 170
+        self.storeInfoView.estimatedRowHeight = 100
         self.storeInfoView.rowHeight = UITableView.automaticDimension
         
         storeInfoView.delegate = self
@@ -47,12 +48,12 @@ class StoreInfoView : UIViewController, UITableViewDelegate, UITableViewDataSour
     func getRestData() {
         dispatchGroup.enter() // 処理始めます
         
-        let url = URL(string: "\(urlString)keyid=\(id)&areacode_l=\(areacode)&hit_per_page=\(hitPerPage)")!
+        let url = URL(string: "\(urlString)keyid=\(id)&areacode_l=\(areacode)&hit_per_page=\(hitPerPage)&offset_page=\(offsetPage)")!
         
         let task: URLSessionTask = URLSession.shared.dataTask(with: url, completionHandler: {data, response, error in
             do {
                 var json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: Any]
-                self.totalHitCount = json["total_hit_count"] as! Int
+                self.totalHitCount = (json["total_hit_count"] as? Int)!
                 // この段階で、total_hit_countは取得できる
                 
                 // restのデータをひとかたまりで取り出して、Any型の配列に型キャスト
@@ -89,16 +90,17 @@ class StoreInfoView : UIViewController, UITableViewDelegate, UITableViewDataSour
         task.resume()
     }
     
+    /// テーブルビューを再読み込みする
     func reloadData() {
         self.storeInfoView.reloadData()
     }
     
+    // ---テーブルビューを作る部分---
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return restInfo.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = storeInfoView.dequeueReusableCell(withIdentifier: "StoreCell", for: indexPath) as! StoreCell
         
         // サムネイルを表示させる処理
@@ -120,6 +122,29 @@ class StoreInfoView : UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.budget.text = "¥\(restInfo[indexPath.row]["budget"] as! Int)"
         
         return cell
+    }
+    // ---ここまで---
+    
+    // 選択したセルの色を戻す
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
+            storeInfoView.deselectRow(at: indexPathForSelectedRow, animated: true)
+        }
+    }
+    
+    // 一番下まできたら次のページを読み込む
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // 読み込み中は動かないように、処理終わりましたを受け取ってから動くようにする
+        dispatchGroup.notify(queue: .main){
+            // 一番下のセルまできたら
+            if self.storeInfoView.contentOffset.y + self.storeInfoView.frame.size.height > self.storeInfoView.contentSize.height && self.storeInfoView.isDragging {
+                self.offsetPage += 1 // 次のページにする
+                self.getRestData() // データを取得
+                self.dispatchGroup.notify(queue: .main){ // 処理終わりました、を受け取ったら動く
+                    self.reloadData() // 再表示
+                }
+            }
+        }
     }
     
 }

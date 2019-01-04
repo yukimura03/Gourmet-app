@@ -97,6 +97,7 @@ class ViewController: UIViewController, UITableViewDataSource,UITableViewDelegat
         }
     }
     
+    // 前の画面から戻ってきたら、セルのハイライトが消える
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
