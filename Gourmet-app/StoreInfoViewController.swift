@@ -8,25 +8,40 @@
 
 import UIKit
 
-class StoreInfoView : UIViewController, UITableViewDelegate, UITableViewDataSource {
+/// 3桁ずつコンマを打つextention
+extension Int {
+    var withComma: String {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        let commaString = formatter.string(from: self as NSNumber)
+        return commaString ?? "\(self)"
+    }
+}
+
+final class StoreInfoViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var storeInfoView: UITableView!
     
     var restData = [[String: Any]]()
     var restInfo = [[String: Any]]()
     
-    let dispatchGroup = DispatchGroup()
-    let dispatchQueue = DispatchQueue(label: "queue")
+    let dispatchGroup2 = DispatchGroup()
+    let dispatchQueue2 = DispatchQueue(label: "queue")
     
     /// レストランデータ検索APIのアドレス。
-    let urlString = "https://api.gnavi.co.jp/RestSearchAPI/v3/?"
+    let RestSearchUrl = "https://api.gnavi.co.jp/RestSearchAPI/v3/?"
+    /// 自分で発行したKey
     let id = "a6cababca853c93d265f18664e323093"
-    let hitPerPage = 50 // １ページに載せる店舗数
-    var offsetPage = 1 // 何ページ目
-    var areacode = "" // 前の画面で選んだエリアのエリアコードを受け取る
-    
-    var areaname = "" // 前の画面で選んだエリアの名前を受け取る
-    var totalHitCount = 0 // 後で選んだエリアの総件数を入れる
+    /// １ページに載せる店舗数
+    let hitPerPage = 50
+    /// 何ページ目
+    var offsetPage = 1
+    /// 前の画面で選んだエリアのエリアコードを受け取る
+    var areacode = ""
+    /// 前の画面で選んだエリアの名前を受け取る
+    var areaname = ""
+    /// 選んだエリアの総件数を入れる
+    var totalHitCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,21 +53,22 @@ class StoreInfoView : UIViewController, UITableViewDelegate, UITableViewDataSour
         storeInfoView.dataSource = self
 
         getRestData()
-        dispatchGroup.notify(queue: .main){ // 処理終わりました、を受け取ったら動く
+        dispatchGroup2.notify(queue: .main){ // 処理終わりました、を受け取ったら動く
             self.reloadData()
-            self.navigationItem.title = "\(self.areaname)の飲食店　\(self.totalHitCount)件"
+            self.navigationItem.title = "\(self.areaname)の飲食店 \(self.totalHitCount.withComma)件"
         }
     }
     
+    /// レストランデータ一覧を取得
     func getRestData() {
-        dispatchGroup.enter() // 処理始めます
+        dispatchGroup2.enter() // 処理始めます
         
-        let url = URL(string: "\(urlString)keyid=\(id)&areacode_l=\(areacode)&hit_per_page=\(hitPerPage)&offset_page=\(offsetPage)")!
+        let url = URL(string: "\(RestSearchUrl)keyid=\(id)&areacode_l=\(areacode)&hit_per_page=\(hitPerPage)&offset_page=\(offsetPage)")!
         
         let task: URLSessionTask = URLSession.shared.dataTask(with: url, completionHandler: {data, response, error in
             do {
                 var json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: Any]
-                self.totalHitCount = (json["total_hit_count"] as? Int)!
+                self.totalHitCount = json["total_hit_count"] as! Int
                 
                 // restのデータをひとかたまりで取り出して、Any型の配列に型キャスト
                 // これは５０店舗のデータが１店舗ずつの塊で配列の中に入ってる
@@ -68,17 +84,18 @@ class StoreInfoView : UIViewController, UITableViewDelegate, UITableViewDataSour
                     let Access = self.restData[n]["access"] as! [String: Any]
                     let Image_url = self.restData[n]["image_url"] as! [String: Any]
                     
+                    
                     self.restInfo += [[
                         "name": self.restData[n]["name"]!,
                         "station": Access["station"]!,
                         "walk": Access["walk"]!,
                         "address": self.restData[n]["address"]!,
                         "tel": self.restData[n]["tel"]!,
-                        "budget": self.restData[n]["budget"]! ,
+                        "budget": self.restData[n]["budget"]!,
                         "image": Image_url["shop_image1"]!
                         ]]
                 }
-                self.dispatchGroup.leave() // 処理終わりました
+                self.dispatchGroup2.leave() // 処理終わりました
             }
             catch {
                 print(error)
@@ -129,7 +146,7 @@ class StoreInfoView : UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.timeRequired.text = "\(restInfo[indexPath.row]["station"] as! String)から徒歩\(restInfo[indexPath.row]["walk"] as! String)分"
             cell.address.text = restInfo[indexPath.row]["address"] as? String
             cell.tel.text = restInfo[indexPath.row]["tel"] as? String
-            cell.budget.text = "¥\(restInfo[indexPath.row]["budget"] as! Int)"
+            cell.budget.text = "¥\((restInfo[indexPath.row]["budget"] as! Int).withComma)"
             
             return cell
         } else {
@@ -152,14 +169,14 @@ class StoreInfoView : UIViewController, UITableViewDelegate, UITableViewDataSour
     // 一番下まできたら次のページを読み込む
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // 読み込み中は動かないように、処理終わりましたを受け取ってから動くようにする
-        dispatchGroup.notify(queue: .main){
+        dispatchGroup2.notify(queue: .main){
             // 一番下のセルまできたら
             if self.storeInfoView.contentOffset.y + self.storeInfoView.frame.size.height > self.storeInfoView.contentSize.height && self.storeInfoView.isDragging {
                 self.numOfSection = 2
                 self.reloadData() // 読み込み中セルを表示させるために一旦再表示する
                 self.offsetPage += 1 // 次のページにする
-                self.getRestData() // データを取得
-                self.dispatchGroup.notify(queue: .main){ // 処理終わりました、を受け取ったら動く
+                self.getRestData()
+                self.dispatchGroup2.notify(queue: .main){ // 処理終わりました、を受け取ったら動く
                     self.numOfSection = 1
                     self.reloadData() // 再表示
                 }

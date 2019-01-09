@@ -13,7 +13,7 @@
         <!--エリア選択-->
         <scene sceneID="TNP-tO-Ffb">
             <objects>
-                <viewController id="28H-GF-Om3" customClass="ViewController" customModule="Gourmet_app" sceneMemberID="viewController">
+                <viewController id="28H-GF-Om3" customClass="ListViewController" customModule="Gourmet_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="a3Q-05-Dea">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -30,7 +30,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="LN8-Sg-h3T" kind="show" identifier="ShowDetail" id="Cnh-zS-8Gb"/>
+                                            <segue destination="LN8-Sg-h3T" kind="show" identifier="showDetail" id="Cnh-zS-8Gb"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -54,10 +54,10 @@
             </objects>
             <point key="canvasLocation" x="775" y="134"/>
         </scene>
-        <!--Store Info View-->
+        <!--Store Info View Controller-->
         <scene sceneID="yUE-r0-vM9">
             <objects>
-                <viewController id="LN8-Sg-h3T" customClass="StoreInfoView" customModule="Gourmet_app" sceneMemberID="viewController">
+                <viewController id="LN8-Sg-h3T" customClass="StoreInfoViewController" customModule="Gourmet_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ybh-Is-OeS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
