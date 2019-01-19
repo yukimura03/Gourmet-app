@@ -18,9 +18,8 @@ class AreaListViewController: UIViewController, UITableViewDataSource, UITableVi
         let areaname_l: String
         let areacode_l: String
     }
-    
-    let dispatchGroup = DispatchGroup()
-    let dispatchQueue = DispatchQueue(label: "queue")
+    /// AreaInTokyo（東京のエリア情報）を入れる配列
+    var areaInTokyo: [AreaInTokyo] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,18 +43,13 @@ class AreaListViewController: UIViewController, UITableViewDataSource, UITableVi
         return try Data(contentsOf: url)
     }
     
-    /// AreaInTokyo（東京のエリア情報）を入れる配列
-    var areaInTokyo: [AreaInTokyo] = []
-    
     /// 読み込んだJSONデータからエリアの名前とコードを抜き出して配列にする。
     func getAreaNameAndCode() {
         guard let data = try? getJSONData() else { return }
+        print(data)
         guard let areaData: [AreaInTokyo] = try? JSONDecoder().decode([AreaInTokyo].self, from: data!) else { return }
         // 抜き出した配列をareaInTokyoに反映させる
         areaInTokyo = areaData
-        // 以下JSONファイルのデータを出力
-        print(areaInTokyo.count)
-        print(areaInTokyo[1].areaname_l)
     }
     
     /// テーブルビューを再読み込みしてデータを表示する

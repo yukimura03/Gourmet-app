@@ -22,14 +22,33 @@ final class StoreInfoViewController : UIViewController, UITableViewDelegate, UIT
     
     @IBOutlet weak var storeInfoView: UITableView!
     
-    var restData = [[String: Any]]()
-    var restInfo = [[String: Any]]()
+    /// レストラン情報から必要な項目だけを抜き出す箱です
+    struct apiData: Codable {
+        let total_hit_count: Int
+        let rest: [restaurantsData]
+    }
+    
+    struct restaurantsData: Codable {
+        let name: String
+        let address: String
+        let tel: String
+        let budget: Int
+        let access: Access
+        let image_url: image
+        
+        struct Access: Codable {
+            let station: String
+            let walk: String
+        }
+        
+        struct image: Codable {
+            let shop_image1: String
+        }
+    }
     
     let dispatchGroup2 = DispatchGroup()
     let dispatchQueue2 = DispatchQueue(label: "queue")
     
-    /// レストランデータ検索APIのアドレス。
-    let RestSearchUrl = "https://api.gnavi.co.jp/RestSearchAPI/v3/?"
     /// 自分で発行したKey
     let id = "a6cababca853c93d265f18664e323093"
     /// １ページに載せる店舗数
@@ -54,71 +73,66 @@ final class StoreInfoViewController : UIViewController, UITableViewDelegate, UIT
 
         getRestData()
         dispatchGroup2.notify(queue: .main){ // 処理終わりました、を受け取ったら動く
-            self.reloadData()
             self.navigationItem.title = "\(self.areaname)の飲食店 \(self.totalHitCount.withComma)件"
+            self.reloadData()
         }
     }
+    
+    var restInfo = [restaurantsData]()
     
     /// レストランデータ一覧を取得
     func getRestData() {
         dispatchGroup2.enter() // 処理始めます
         
-        let url = URL(string: "\(RestSearchUrl)keyid=\(id)&areacode_l=\(areacode)&hit_per_page=\(hitPerPage)&offset_page=\(offsetPage)")!
+        let url = URL(string: "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(id)&areacode_l=\(areacode)&hit_per_page=\(hitPerPage)&offset_page=\(offsetPage)")!
         
-        let task: URLSessionTask = URLSession.shared.dataTask(with: url, completionHandler: {data, response, error in
+        let request = URLRequest(url: url)
+        let task = URLSession.shared.dataTask(with: request) { (data, urlResponse, error) in
+            // nilチェック
+            guard let data = data, let urlResponse = urlResponse as? HTTPURLResponse else {
+                // 通信エラーなどの場合
+                return;
+            }
             do {
-                var json = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments) as! [String: Any]
-                self.totalHitCount = json["total_hit_count"] as! Int
+                let decoder = JSONDecoder()
+                let response = try decoder.decode(apiData.self, from: data)
+                self.restInfo += response.rest
+                self.totalHitCount = response.total_hit_count
+                self.status = 1
                 
-                // restのデータをひとかたまりで取り出して、Any型の配列に型キャスト
-                // これは５０店舗のデータが１店舗ずつの塊で配列の中に入ってる
-                let jsonRest = json["rest"] as! [Any]
-                // Any型の配列だと中身にアクセスできないので、辞書型の配列に変更
-                self.restData = jsonRest.map { (restData) -> [String: Any] in
-                    return restData as! [String: Any]
-                }
-                
-                // 表示項目は、店名、最寄り駅（徒歩何分）、住所、電話番号、予算、サムネイル画像。
-                // 必要な項目だけを取りだして集めておく
-                for n in 0..<self.restData.count {
-                    let Access = self.restData[n]["access"] as! [String: Any]
-                    let Image_url = self.restData[n]["image_url"] as! [String: Any]
-                    
-                    
-                    self.restInfo += [[
-                        "name": self.restData[n]["name"]!,
-                        "station": Access["station"]!,
-                        "walk": Access["walk"]!,
-                        "address": self.restData[n]["address"]!,
-                        "tel": self.restData[n]["tel"]!,
-                        "budget": self.restData[n]["budget"]!,
-                        "image": Image_url["shop_image1"]!
-                        ]]
-                }
-                self.dispatchGroup2.leave() // 処理終わりました
+                self.dispatchGroup2.leave()
+            } catch {
+                print("error")
+                return;
             }
-            catch {
-                print(error)
-            }
-        })
+        }
+        // リクエストを実行
         task.resume()
     }
-    
     /// テーブルビューを再読み込みする
     func reloadData() {
         self.storeInfoView.reloadData()
     }
     
     // ---テーブルビューを作る部分---
-    var numOfSection = 1
+    /// 0=読み込み中　1=読み込み完了、2=再読み込み中
+    var status = 0
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return numOfSection
+        if status == 0 || status == 1 {
+            return 1
+        } else {
+            return 2
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return restInfo.count // 1つめはレストラン情報を載せるところ
+            if status == 0 {
+                return 1
+            } else {
+                return restInfo.count
+            }
         } else {
             return 1 // 読み込み中のindicatorを見せるためのやつ
         }
@@ -127,28 +141,35 @@ final class StoreInfoViewController : UIViewController, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
-            // 1つ目のセクションの中身
-            let cell = storeInfoView.dequeueReusableCell(withIdentifier: "StoreCell", for: indexPath) as! StoreCell
-            
-            // サムネイルを表示させる処理
-            cell.storeImage.layer.cornerRadius = cell.storeImage.frame.size.width * 0.1
-            cell.storeImage.clipsToBounds = true
-            let url = URL(string: restInfo[indexPath.row]["image"] as! String)
-            if url != nil {
-                let data = try? Data(contentsOf: url!)
-                cell.storeImage.image = UIImage(data: data!)
+            if status == 0 {
+                let LoadingCell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath) as! LoadingCell
+                LoadingCell.indicator.startAnimating() // indicatorを表示させる
+                
+                return LoadingCell
             } else {
-                cell.storeImage.image = UIImage(named: "noimage")
+                // 1つ目のセクションの中身
+                let cell = storeInfoView.dequeueReusableCell(withIdentifier: "StoreCell", for: indexPath) as! StoreCell
+                
+                // サムネイルを表示させる処理
+                cell.storeImage.layer.cornerRadius = cell.storeImage.frame.size.width * 0.1
+                cell.storeImage.clipsToBounds = true
+                let url = URL(string: restInfo[indexPath.row].image_url.shop_image1)
+                if url != nil {
+                    let data = try? Data(contentsOf: url!)
+                    cell.storeImage.image = UIImage(data: data!)
+                } else {
+                    cell.storeImage.image = UIImage(named: "noimage")
+                }
+                
+                // それ以外の文字を表示させる
+                cell.storeName.text = restInfo[indexPath.row].name
+                 cell.timeRequired.text = "\(restInfo[indexPath.row].access.station)から徒歩\(restInfo[indexPath.row].access.walk)分"
+                 cell.address.text = restInfo[indexPath.row].address
+                 cell.tel.text = restInfo[indexPath.row].tel
+                 cell.budget.text = "¥\((restInfo[indexPath.row].budget).withComma)"
+                
+                return cell
             }
-            
-            // それ以外の文字を表示させる
-            cell.storeName.text = restInfo[indexPath.row]["name"] as? String
-            cell.timeRequired.text = "\(restInfo[indexPath.row]["station"] as! String)から徒歩\(restInfo[indexPath.row]["walk"] as! String)分"
-            cell.address.text = restInfo[indexPath.row]["address"] as? String
-            cell.tel.text = restInfo[indexPath.row]["tel"] as? String
-            cell.budget.text = "¥\((restInfo[indexPath.row]["budget"] as! Int).withComma)"
-            
-            return cell
         } else {
             // 2つ目のセクションの中身
             let LoadingCell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath) as! LoadingCell
@@ -168,17 +189,21 @@ final class StoreInfoViewController : UIViewController, UITableViewDelegate, UIT
     
     // 一番下まできたら次のページを読み込む
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
         // 読み込み中は動かないように、処理終わりましたを受け取ってから動くようにする
-        dispatchGroup2.notify(queue: .main){
-            // 一番下のセルまできたら
+        dispatchGroup2.notify(queue: .main) {
+            
             if self.storeInfoView.contentOffset.y + self.storeInfoView.frame.size.height > self.storeInfoView.contentSize.height && self.storeInfoView.isDragging {
-                self.numOfSection = 2
-                self.reloadData() // 読み込み中セルを表示させるために一旦再表示する
-                self.offsetPage += 1 // 次のページにする
+                
+                self.status = 2
+                self.reloadData()
+                
+                self.offsetPage += 1
                 self.getRestData()
-                self.dispatchGroup2.notify(queue: .main){ // 処理終わりました、を受け取ったら動く
-                    self.numOfSection = 1
-                    self.reloadData() // 再表示
+                
+                self.dispatchGroup2.notify(queue: .main) {
+                    self.status = 1
+                    self.reloadData()
                 }
             }
         }
