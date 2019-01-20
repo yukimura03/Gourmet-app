@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GetApiModel {
+class RestInfoModel {
     /// レストラン情報から必要な項目だけを抜き出す箱です
     struct apiData: Codable {
         let total_hit_count: Int
@@ -20,7 +20,16 @@ class GetApiModel {
         let tel: String
         let budget: Int
         let access: Access
-        let image_url: image
+        let imageUrl: image
+        
+        private enum CodingKeys: String, CodingKey {
+            case name
+            case address
+            case tel
+            case budget
+            case access
+            case imageUrl = "image_url"
+        }
         
         struct Access: Codable {
             let station: String
@@ -28,14 +37,17 @@ class GetApiModel {
         }
         
         struct image: Codable {
-            let shop_image1: String
+            let shopImage: String
+            
+            private enum CodingKeys: String, CodingKey {
+                case shopImage = "shop_image1"
+            }
         }
     }
     
     /// レストランデータを１店舗ずつ区切って入れる配列
     var restInfo = [restaurantsData]()
-    /// 現在の状態
-    /// 0=読み込み中　1=読み込み完了、2=再読み込み中
+    /// 現在の状態 / 0=読み込み中　1=読み込み完了、2=再読み込み中
     var status = 0
     
     // URLを構成する項目

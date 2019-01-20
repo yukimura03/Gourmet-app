@@ -14,11 +14,10 @@ class AreaListViewController: UIViewController, UITableViewDataSource, UITableVi
     @IBOutlet weak var tableView: UITableView!
     
     let areaListModel = AreaListModel()
-    let getApiModel = GetApiModel()
+    let restInfoModel = RestInfoModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.delegate = self
         tableView.dataSource = self
     
@@ -51,9 +50,9 @@ class AreaListViewController: UIViewController, UITableViewDataSource, UITableVi
         // タップしたセルの「エリア名」「エリアコード」を次の画面に渡す
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
-                let storeInfoView = segue.destination as! StoreInfoViewController
-                getApiModel.areaname = areaListModel.areaInTokyo[indexPath.row].areaname_l
-                getApiModel.areacode = areaListModel.areaInTokyo[indexPath.row].areacode_l
+                let restInfoView = segue.destination as! RestaurantsInfoViewController
+                restInfoView.areaname = areaListModel.areaInTokyo[indexPath.row].areaname_l
+                restInfoView.areacode = areaListModel.areaInTokyo[indexPath.row].areacode_l
             }
         }
     }

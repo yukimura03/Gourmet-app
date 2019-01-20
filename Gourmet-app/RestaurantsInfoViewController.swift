@@ -18,36 +18,40 @@ extension Int {
     }
 }
 
-final class StoreInfoViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
+final class RestaurantsInfoViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var storeInfoView: UITableView!
+    @IBOutlet weak var restInfoView: UITableView!
     
-    let getApiModel = GetApiModel()
+    let restInfoModel = RestInfoModel()
+    var areaname = ""
+    var areacode = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.storeInfoView.estimatedRowHeight = 100
-        self.storeInfoView.rowHeight = UITableView.automaticDimension
+        self.restInfoView.estimatedRowHeight = 100
+        self.restInfoView.rowHeight = UITableView.automaticDimension
         
-        storeInfoView.delegate = self
-        storeInfoView.dataSource = self
+        restInfoView.delegate = self
+        restInfoView.dataSource = self
+        restInfoModel.areaname = areaname
+        restInfoModel.areacode = areacode
 
-        getApiModel.getRestData()
-        getApiModel.dispatchGroup.notify(queue: .main){ // 処理終わりました、を受け取ったら動く
-            self.navigationItem.title = "\(self.getApiModel.areaname)の飲食店 \(self.getApiModel.totalHitCount.withComma)件"
+        restInfoModel.getRestData()
+        restInfoModel.dispatchGroup.notify(queue: .main){ // 処理終わりました、を受け取ったら動く
+            self.navigationItem.title = "\(self.restInfoModel.areaname)の飲食店 \(self.restInfoModel.totalHitCount.withComma)件"
             self.reloadData()
         }
     }
     
     /// テーブルビューを再読み込みする
     func reloadData() {
-        self.storeInfoView.reloadData()
+        self.restInfoView.reloadData()
     }
     
     // ---テーブルビューを作る部分---
     func numberOfSections(in tableView: UITableView) -> Int {
-        if getApiModel.status == 0 || getApiModel.status == 1 {
+        if restInfoModel.status == 0 || restInfoModel.status == 1 {
             return 1
         } else {
             return 2
@@ -56,10 +60,10 @@ final class StoreInfoViewController : UIViewController, UITableViewDelegate, UIT
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            if getApiModel.status == 0 {
+            if restInfoModel.status == 0 {
                 return 1 // 読み込み中のindicatorを見せるためのセル
             } else {
-                return getApiModel.restInfo.count
+                return restInfoModel.restInfo.count
             }
         } else {
             return 1 // 読み込み中のindicatorを見せるためのセル
@@ -69,32 +73,32 @@ final class StoreInfoViewController : UIViewController, UITableViewDelegate, UIT
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
-            if getApiModel.status == 0 {
+            if restInfoModel.status == 0 {
                 let LoadingCell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath) as! LoadingCell
                 LoadingCell.indicator.startAnimating() // indicatorを表示させる
                 
                 return LoadingCell
             } else {
                 // 1つ目のセクションの中身
-                let cell = storeInfoView.dequeueReusableCell(withIdentifier: "StoreCell", for: indexPath) as! StoreCell
+                let cell = restInfoView.dequeueReusableCell(withIdentifier: "RestInfoCell", for: indexPath) as! RestInfoCell
                 
                 // サムネイルを表示させる処理
-                cell.storeImage.layer.cornerRadius = cell.storeImage.frame.size.width * 0.1
-                cell.storeImage.clipsToBounds = true
-                let url = URL(string: getApiModel.restInfo[indexPath.row].image_url.shop_image1)
+                cell.shopImage.layer.cornerRadius = cell.shopImage.frame.size.width * 0.1
+                cell.shopImage.clipsToBounds = true
+                let url = URL(string: restInfoModel.restInfo[indexPath.row].imageUrl.shopImage)
                 if url != nil {
                     let data = try? Data(contentsOf: url!)
-                    cell.storeImage.image = UIImage(data: data!)
+                    cell.shopImage.image = UIImage(data: data!)
                 } else {
-                    cell.storeImage.image = UIImage(named: "noimage")
+                    cell.shopImage.image = UIImage(named: "noimage")
                 }
                 
                 // それ以外の文字を表示させる
-                cell.storeName.text = getApiModel.restInfo[indexPath.row].name
-                 cell.timeRequired.text = "\(getApiModel.restInfo[indexPath.row].access.station)から徒歩\(getApiModel.restInfo[indexPath.row].access.walk)分"
-                 cell.address.text = getApiModel.restInfo[indexPath.row].address
-                 cell.tel.text = getApiModel.restInfo[indexPath.row].tel
-                 cell.budget.text = "¥\((getApiModel.restInfo[indexPath.row].budget).withComma)"
+                cell.name.text = restInfoModel.restInfo[indexPath.row].name
+                 cell.timeRequired.text = "\(restInfoModel.restInfo[indexPath.row].access.station)から徒歩\(restInfoModel.restInfo[indexPath.row].access.walk)分"
+                 cell.address.text = restInfoModel.restInfo[indexPath.row].address
+                 cell.tel.text = restInfoModel.restInfo[indexPath.row].tel
+                 cell.budget.text = "¥\((restInfoModel.restInfo[indexPath.row].budget).withComma)"
                 
                 return cell
             }
@@ -111,27 +115,29 @@ final class StoreInfoViewController : UIViewController, UITableViewDelegate, UIT
     // 選択したセルの色を戻す
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
-            storeInfoView.deselectRow(at: indexPathForSelectedRow, animated: true)
+            restInfoView.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
     }
     
     // 一番下まできたら次のページを読み込む
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         // 読み込み中は動かないように、処理終わりましたを受け取ってから動くようにする
-        getApiModel.dispatchGroup.notify(queue: .main) {
-            
-            if self.storeInfoView.contentOffset.y + self.storeInfoView.frame.size.height > self.storeInfoView.contentSize.height && self.storeInfoView.isDragging {
+        restInfoModel.dispatchGroup.notify(queue: .main) {
+            // 一番下までたどり着いたら
+            if self.restInfoView.contentOffset.y + self.restInfoView.frame.size.height > self.restInfoView.contentSize.height && self.restInfoView.isDragging {
                 
-                self.getApiModel.status = 2
-                
+                // 読み込み中ステータスに変更
+                self.restInfoModel.status = 2
+                // indicatorを表示するためにTableViewを更新する
                 self.reloadData()
                 
-                self.getApiModel.offsetPage += 1
-                self.getApiModel.getRestData()
+                // APIのアドレスを次のページに更新
+                self.restInfoModel.offsetPage += 1
+                //レストランデータを取得、更新
+                self.restInfoModel.getRestData()
                 
-                self.getApiModel.dispatchGroup.notify(queue: .main) {
-                    self.getApiModel.status = 1
+                self.restInfoModel.dispatchGroup.notify(queue: .main) {
+                    self.restInfoModel.status = 1
                     self.reloadData()
                 }
             }

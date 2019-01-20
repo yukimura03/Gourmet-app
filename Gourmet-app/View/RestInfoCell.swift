@@ -8,10 +8,10 @@
 
 import UIKit
 
-class StoreCell: UITableViewCell {
+class RestInfoCell: UITableViewCell {
     
-    @IBOutlet weak var storeName: UILabel!
-    @IBOutlet weak var storeImage: UIImageView!
+    @IBOutlet weak var name: UILabel!
+    @IBOutlet weak var shopImage: UIImageView!
     @IBOutlet weak var timeRequired: UILabel!
     @IBOutlet weak var address: UILabel!
     @IBOutlet weak var tel: UILabel!

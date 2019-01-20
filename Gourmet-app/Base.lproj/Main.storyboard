@@ -30,7 +30,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="LN8-Sg-h3T" kind="show" identifier="showDetail" id="Cnh-zS-8Gb"/>
+                                            <segue destination="LN8-Sg-h3T" kind="show" identifier="showDetail" id="tej-85-3Vp"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -54,10 +54,10 @@
             </objects>
             <point key="canvasLocation" x="775" y="134"/>
         </scene>
-        <!--Store Info View Controller-->
+        <!--Restaurants Info View Controller-->
         <scene sceneID="yUE-r0-vM9">
             <objects>
-                <viewController id="LN8-Sg-h3T" customClass="StoreInfoViewController" customModule="Gourmet_app" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="LN8-Sg-h3T" customClass="RestaurantsInfoViewController" customModule="Gourmet_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ybh-Is-OeS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -66,7 +66,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="StoreCell" rowHeight="175" id="WMy-FV-zR0" customClass="StoreCell" customModule="Gourmet_app" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RestInfoCell" rowHeight="175" id="WMy-FV-zR0" customClass="RestInfoCell" customModule="Gourmet_app" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="175"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WMy-FV-zR0" id="C7y-6o-QAz">
@@ -141,8 +141,8 @@
                                         <connections>
                                             <outlet property="address" destination="Bkq-gu-X5b" id="uC4-K4-NLX"/>
                                             <outlet property="budget" destination="vac-wb-mug" id="4AS-Qa-5O8"/>
-                                            <outlet property="storeImage" destination="2XB-IO-Q8Y" id="R20-3a-ysq"/>
-                                            <outlet property="storeName" destination="JVE-De-Pzu" id="lwo-86-9dM"/>
+                                            <outlet property="name" destination="JVE-De-Pzu" id="Z3X-Qb-o6d"/>
+                                            <outlet property="shopImage" destination="2XB-IO-Q8Y" id="kO8-xh-SWs"/>
                                             <outlet property="tel" destination="5kD-4G-QaQ" id="X3I-gY-VWv"/>
                                             <outlet property="timeRequired" destination="GuX-IS-PJn" id="7G5-ax-q2J"/>
                                         </connections>
@@ -168,7 +168,7 @@
                         <viewLayoutGuide key="safeArea" id="bRO-9D-Rzs"/>
                     </view>
                     <connections>
-                        <outlet property="storeInfoView" destination="PFv-JM-Xo4" id="uqO-fJ-vWD"/>
+                        <outlet property="restInfoView" destination="PFv-JM-Xo4" id="azk-Ni-3bG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eQt-hp-qrp" userLabel="First Responder" sceneMemberID="firstResponder"/>

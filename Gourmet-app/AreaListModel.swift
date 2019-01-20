@@ -29,7 +29,6 @@ class AreaListModel {
     /// 読み込んだJSONデータからエリアの名前とコードだけ抜き出す
     func getAreaNameAndCode() {
         guard let data = try? getJSONData() else { return }
-        print(data)
         guard let areaData: [AreaInTokyo] = try? JSONDecoder().decode([AreaInTokyo].self, from: data!) else { return }
         // 抜き出したデータをareaInTokyo（配列）に反映させる
         areaInTokyo = areaData
