@@ -16,7 +16,8 @@
 		49B0856221D509C300D68D85 /* StoreInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B0856121D509C300D68D85 /* StoreInfoViewController.swift */; };
 		49B0856421D524D100D68D85 /* StoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B0856321D524D100D68D85 /* StoreCell.swift */; };
 		49BD6E3421E7545100E5A3A0 /* AreaInTokyo.json in Resources */ = {isa = PBXBuildFile; fileRef = 49BD6E3321E7545100E5A3A0 /* AreaInTokyo.json */; };
-		49BD6E3821E78AB300E5A3A0 /* AreaListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BD6E3721E78AB300E5A3A0 /* AreaListView.swift */; };
+		49BD6E5821F42FD500E5A3A0 /* AreaListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BD6E5721F42FD500E5A3A0 /* AreaListModel.swift */; };
+		49BD6E5A21F440F700E5A3A0 /* GetApiModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BD6E5921F440F700E5A3A0 /* GetApiModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +32,8 @@
 		49B0856121D509C300D68D85 /* StoreInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreInfoViewController.swift; sourceTree = "<group>"; };
 		49B0856321D524D100D68D85 /* StoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreCell.swift; sourceTree = "<group>"; };
 		49BD6E3321E7545100E5A3A0 /* AreaInTokyo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AreaInTokyo.json; sourceTree = "<group>"; };
-		49BD6E3721E78AB300E5A3A0 /* AreaListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaListView.swift; sourceTree = "<group>"; };
+		49BD6E5721F42FD500E5A3A0 /* AreaListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaListModel.swift; sourceTree = "<group>"; };
+		49BD6E5921F440F700E5A3A0 /* GetApiModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetApiModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,9 +69,10 @@
 				49B0854F21D3C87F00D68D85 /* AppDelegate.swift */,
 				49BD6E3321E7545100E5A3A0 /* AreaInTokyo.json */,
 				49B0855121D3C87F00D68D85 /* AreaListViewController.swift */,
-				49BD6E3721E78AB300E5A3A0 /* AreaListView.swift */,
+				49BD6E5721F42FD500E5A3A0 /* AreaListModel.swift */,
 				49B0855321D3C87F00D68D85 /* Main.storyboard */,
 				49B0856121D509C300D68D85 /* StoreInfoViewController.swift */,
+				49BD6E5921F440F700E5A3A0 /* GetApiModel.swift */,
 				49BD6E3221E4ECC400E5A3A0 /* View */,
 				49B0855621D3C88000D68D85 /* Assets.xcassets */,
 				49B0855821D3C88000D68D85 /* LaunchScreen.storyboard */,
@@ -163,8 +166,9 @@
 				49B0855221D3C87F00D68D85 /* AreaListViewController.swift in Sources */,
 				49B0855021D3C87F00D68D85 /* AppDelegate.swift in Sources */,
 				49B0856421D524D100D68D85 /* StoreCell.swift in Sources */,
+				49BD6E5A21F440F700E5A3A0 /* GetApiModel.swift in Sources */,
 				49688CFE21DF505500027BD3 /* LoadingCell.swift in Sources */,
-				49BD6E3821E78AB300E5A3A0 /* AreaListView.swift in Sources */,
+				49BD6E5821F42FD500E5A3A0 /* AreaListModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
