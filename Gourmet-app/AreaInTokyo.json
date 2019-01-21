@@ -1,0 +1,227 @@
+[
+{
+    "areacode_l": "AREAL2101",
+    "areaname_l": "銀座・有楽町・築地",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2107",
+    "areaname_l": "新橋・浜松町・田町",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2133",
+    "areaname_l": "赤坂・六本木・麻布",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2184",
+    "areaname_l": "飯田橋・四ツ谷・神楽坂",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2115",
+    "areaname_l": "新宿・代々木",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2116",
+    "areaname_l": "大久保・高田馬場",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2125",
+    "areaname_l": "渋谷・原宿・青山",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2156",
+    "areaname_l": "池袋・巣鴨・駒込",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2141",
+    "areaname_l": "東京駅・丸の内・日本橋",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2198",
+    "areaname_l": "上野・浅草・日暮里",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2142",
+    "areaname_l": "神田・秋葉原・水道橋",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2169",
+    "areaname_l": "品川・五反田・大崎",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2170",
+    "areaname_l": "お台場・豊洲・湾岸",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2178",
+    "areaname_l": "恵比寿・中目黒・目黒",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2164",
+    "areaname_l": "自由が丘・三軒茶屋・二子玉川",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2207",
+    "areaname_l": "下北沢・明大前・成城学園前",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2217",
+    "areaname_l": "中野・吉祥寺・三鷹",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2222",
+    "areaname_l": "練馬・江古田・田無",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2228",
+    "areaname_l": "錦糸町・押上・新小岩",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2146",
+    "areaname_l": "人形町・門前仲町・葛西",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2241",
+    "areaname_l": "北千住・綾瀬・亀有",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2250",
+    "areaname_l": "板橋・成増・赤羽",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2254",
+    "areaname_l": "大井町・大森・蒲田",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2273",
+    "areaname_l": "府中・調布",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2923",
+    "areaname_l": "町田・多摩",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2278",
+    "areaname_l": "小金井・国分寺・国立",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2286",
+    "areaname_l": "立川・八王子・青梅",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+},
+{
+    "areacode_l": "AREAL2295",
+    "areaname_l": "伊豆諸島・小笠原諸島",
+    "pref": {
+        "pref_code": "PREF13",
+        "pref_name": "東京都"
+    }
+}
+]
+
