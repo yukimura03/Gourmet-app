@@ -12,8 +12,13 @@ class AreaListModel {
     
     /// JSONからエリアの名前とコードだけ取り出すための箱
     struct AreaInTokyo: Codable {
-        let areaname_l: String
-        let areacode_l: String
+        let areanameL: String
+        let areacodeL: String
+        
+        private enum CodingKeys: String, CodingKey {
+            case areanameL = "areaname_l"
+            case areacodeL = "areacode_l"
+        }
     }
     /// AreaInTokyo（東京のエリア情報）を入れる配列
     var areaInTokyo: [AreaInTokyo] = []

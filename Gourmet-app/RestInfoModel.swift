@@ -90,7 +90,6 @@ class RestInfoModel {
                 self.dispatchGroup.leave()
             } catch {
                 print("error")
-                return;
             }
         }
         // リクエストを実行

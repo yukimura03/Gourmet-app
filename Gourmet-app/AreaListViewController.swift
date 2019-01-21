@@ -9,12 +9,11 @@
 import UIKit
 import Foundation
 
-class AreaListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+final class AreaListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     
     let areaListModel = AreaListModel()
-    let restInfoModel = RestInfoModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,11 +27,6 @@ class AreaListViewController: UIViewController, UITableViewDataSource, UITableVi
         areaListModel.getAreaNameAndCode()
     }
     
-    /// テーブルビューを再読み込みしてデータを表示する
-    func reloadData() {
-        self.tableView.reloadData()
-    }
-    
     // cellの数はエリア名の数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return areaListModel.areaInTokyo.count
@@ -40,9 +34,8 @@ class AreaListViewController: UIViewController, UITableViewDataSource, UITableVi
     
     // cellにエリア名を表示する
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "AreaCell", for: indexPath)
-        cell.textLabel?.text = areaListModel.areaInTokyo[indexPath.row].areaname_l
+        cell.textLabel?.text = areaListModel.areaInTokyo[indexPath.row].areanameL
         return cell
     }
     
@@ -51,8 +44,8 @@ class AreaListViewController: UIViewController, UITableViewDataSource, UITableVi
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let restInfoView = segue.destination as! RestaurantsInfoViewController
-                restInfoView.areaname = areaListModel.areaInTokyo[indexPath.row].areaname_l
-                restInfoView.areacode = areaListModel.areaInTokyo[indexPath.row].areacode_l
+                restInfoView.areaname = areaListModel.areaInTokyo[indexPath.row].areanameL
+                restInfoView.areacode = areaListModel.areaInTokyo[indexPath.row].areacodeL
             }
         }
     }
