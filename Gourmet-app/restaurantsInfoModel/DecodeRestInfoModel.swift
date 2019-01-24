@@ -1,56 +1,24 @@
 //
-//  GetApiModel.swift
+//  DecodeRestInfoModel.swift
 //  Gourmet-app
 //
-//  Created by minagi on 2019/01/20.
+//  Created by minagi on 2019/01/24.
 //  Copyright © 2019 minagi. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class RestInfoModel {
-    /// レストラン情報から必要な項目だけを抜き出す箱です
-    struct apiData: Codable {
-        let total_hit_count: Int
-        let rest: [restaurantsData]
-    }
-    struct restaurantsData: Codable {
-        let name: String
-        let address: String
-        let tel: String
-        let budget: Int
-        let access: Access
-        let imageUrl: image
-        
-        private enum CodingKeys: String, CodingKey {
-            case name
-            case address
-            case tel
-            case budget
-            case access
-            case imageUrl = "image_url"
-        }
-        
-        struct Access: Codable {
-            let station: String
-            let walk: String
-        }
-        
-        struct image: Codable {
-            let shopImage: String
-            
-            private enum CodingKeys: String, CodingKey {
-                case shopImage = "shop_image1"
-            }
-        }
-    }
-    
+class DecodeRestInfoModel {
+    let restInfoModel = RestInfoModel()
     /// レストランデータを１店舗ずつ区切って入れる配列
-    var restInfo = [restaurantsData]()
+    var restInfo = [RestInfoModel.restaurantsData]()
+    
+    let dispatchGroup = DispatchGroup()
+    let dispatchQueue = DispatchQueue(label: "queue")
+    
     /// 現在の状態 / 0=読み込み中　1=読み込み完了、2=再読み込み中
     var status = 0
     
-    // URLを構成する項目
     /// 自分で発行したKey
     let id = "a6cababca853c93d265f18664e323093"
     /// １ページに載せる店舗数
@@ -63,9 +31,6 @@ class RestInfoModel {
     var areaname = ""
     /// 選んだエリアの総件数を入れる
     var totalHitCount = 0
-    
-    let dispatchGroup = DispatchGroup()
-    let dispatchQueue = DispatchQueue(label: "queue")
     
     /// レストランデータ一覧を取得
     func getRestData() {
@@ -82,7 +47,7 @@ class RestInfoModel {
             }
             do {
                 let decoder = JSONDecoder()
-                let response = try decoder.decode(apiData.self, from: data)
+                let response = try decoder.decode(RestInfoModel.apiData.self, from: data)
                 self.restInfo += response.rest
                 self.totalHitCount = response.total_hit_count
                 self.status = 1

@@ -43,9 +43,9 @@ final class AreaListViewController: UIViewController, UITableViewDataSource, UIT
         // タップしたセルの「エリア名」「エリアコード」を次の画面に渡す
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
-                let restInfoView = segue.destination as! RestaurantsInfoViewController
-                restInfoView.areaname = areaListModel.areaInTokyo[indexPath.row].areanameL
-                restInfoView.areacode = areaListModel.areaInTokyo[indexPath.row].areacodeL
+                let restInfoVC = segue.destination as! RestaurantsInfoViewController
+                restInfoVC.areaname = areaListModel.areaInTokyo[indexPath.row].areanameL
+                restInfoVC.areacode = areaListModel.areaInTokyo[indexPath.row].areacodeL
             }
         }
     }

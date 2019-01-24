@@ -23,6 +23,8 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     @IBOutlet weak var restInfoView: UITableView!
     
     let restInfoModel = RestInfoModel()
+    let decodeRestInfoModel = DecodeRestInfoModel()
+    
     var areaname = ""
     var areacode = ""
 
@@ -34,12 +36,12 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         
         restInfoView.delegate = self
         restInfoView.dataSource = self
-        restInfoModel.areaname = areaname
-        restInfoModel.areacode = areacode
-
-        restInfoModel.getRestData()
-        restInfoModel.dispatchGroup.notify(queue: .main){ // 処理終わりました、を受け取ったら動く
-            self.navigationItem.title = "\(self.restInfoModel.areaname)の飲食店 \(self.restInfoModel.totalHitCount.withComma)件"
+        decodeRestInfoModel.areaname = areaname
+        decodeRestInfoModel.areacode = areacode
+        
+        decodeRestInfoModel.getRestData()
+        decodeRestInfoModel.dispatchGroup.notify(queue: .main){ // 処理終わりました、を受け取ったら動く
+            self.navigationItem.title = "\(self.decodeRestInfoModel.areaname)の飲食店 \(self.decodeRestInfoModel.totalHitCount.withComma)件"
             self.reloadData()
         }
     }
@@ -51,7 +53,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     
     // ---テーブルビューを作る部分---
     func numberOfSections(in tableView: UITableView) -> Int {
-        if restInfoModel.status == 0 || restInfoModel.status == 1 {
+        if decodeRestInfoModel.status == 0 || decodeRestInfoModel.status == 1 {
             return 1
         } else {
             return 2
@@ -60,20 +62,25 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            if restInfoModel.status == 0 {
+            if decodeRestInfoModel.status == 0 {
                 return 1 // 読み込み中のindicatorを見せるためのセル
             } else {
-                return restInfoModel.restInfo.count
+                return decodeRestInfoModel.restInfo.count
             }
         } else {
             return 1 // 読み込み中のindicatorを見せるためのセル
         }
     }
     
+    enum section: Int {
+        case contents = 0
+        case indicator = 1
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
-            if restInfoModel.status == 0 {
+            if decodeRestInfoModel.status == 0 {
                 let LoadingCell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath) as! LoadingCell
                 LoadingCell.indicator.startAnimating() // indicatorを表示させる
                 
@@ -85,7 +92,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
                 // サムネイルを表示させる処理
                 cell.shopImage.layer.cornerRadius = cell.shopImage.frame.size.width * 0.1
                 cell.shopImage.clipsToBounds = true
-                let url = URL(string: restInfoModel.restInfo[indexPath.row].imageUrl.shopImage)
+                let url = URL(string: decodeRestInfoModel.restInfo[indexPath.row].imageUrl.shopImage)
                 if url != nil {
                     let data = try? Data(contentsOf: url!)
                     cell.shopImage.image = UIImage(data: data!)
@@ -94,11 +101,11 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
                 }
                 
                 // それ以外の文字を表示させる
-                cell.name.text = restInfoModel.restInfo[indexPath.row].name
-                 cell.timeRequired.text = "\(restInfoModel.restInfo[indexPath.row].access.station)から徒歩\(restInfoModel.restInfo[indexPath.row].access.walk)分"
-                 cell.address.text = restInfoModel.restInfo[indexPath.row].address
-                 cell.tel.text = restInfoModel.restInfo[indexPath.row].tel
-                 cell.budget.text = "¥\((restInfoModel.restInfo[indexPath.row].budget).withComma)"
+                cell.name.text = decodeRestInfoModel.restInfo[indexPath.row].name
+                 cell.timeRequired.text = "\(decodeRestInfoModel.restInfo[indexPath.row].access.station)から徒歩\(decodeRestInfoModel.restInfo[indexPath.row].access.walk)分"
+                 cell.address.text = decodeRestInfoModel.restInfo[indexPath.row].address
+                 cell.tel.text = decodeRestInfoModel.restInfo[indexPath.row].tel
+                 cell.budget.text = "¥\((decodeRestInfoModel.restInfo[indexPath.row].budget).withComma)"
                 
                 return cell
             }
@@ -122,22 +129,22 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     // 一番下まできたら次のページを読み込む
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // 読み込み中は動かないように、処理終わりましたを受け取ってから動くようにする
-        restInfoModel.dispatchGroup.notify(queue: .main) {
+        decodeRestInfoModel.dispatchGroup.notify(queue: .main) {
             // 一番下までたどり着いたら
             if self.restInfoView.contentOffset.y + self.restInfoView.frame.size.height > self.restInfoView.contentSize.height && self.restInfoView.isDragging {
                 
                 // 読み込み中ステータスに変更
-                self.restInfoModel.status = 2
+                self.decodeRestInfoModel.status = 2
                 // indicatorを表示するためにTableViewを更新する
                 self.reloadData()
                 
                 // APIのアドレスを次のページに更新
-                self.restInfoModel.offsetPage += 1
+                self.decodeRestInfoModel.offsetPage += 1
                 //レストランデータを取得、更新
-                self.restInfoModel.getRestData()
+                self.decodeRestInfoModel.getRestData()
                 
-                self.restInfoModel.dispatchGroup.notify(queue: .main) {
-                    self.restInfoModel.status = 1
+                self.decodeRestInfoModel.dispatchGroup.notify(queue: .main) {
+                    self.decodeRestInfoModel.status = 1
                     self.reloadData()
                 }
             }
