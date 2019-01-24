@@ -47,7 +47,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="エリア選択" id="HF3-WB-SyS"/>
                     <connections>
-                        <outlet property="tableView" destination="fcj-v9-gJV" id="JrI-fL-MrF"/>
+                        <outlet property="areaListView" destination="fcj-v9-gJV" id="OC5-f9-eg9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ADL-qR-JhR" userLabel="First Responder" sceneMemberID="firstResponder"/>
