@@ -62,30 +62,39 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     
     enum Section: Int {
         case contents = 0
-        case indicator = 1
+        case indicator
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        
+        switch Section(rawValue: section) {
+        case .some(.contents):
             if decodeRestInfoModel.status == 0 {
-                return 1 // 読み込み中のindicatorを見せるためのセル
+                return 1 // inidicatorを一つ表示させる
             } else {
                 return decodeRestInfoModel.restInfo.count
             }
-        } else {
-            return 1 // 読み込み中のindicatorを見せるためのセル
+        case .some(.indicator):
+            return 1 // inidicatorを一つ表示させる
+        case .none:
+            return 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if indexPath.section == 0 {
+        guard let trueSection = Section(rawValue: indexPath.section) else {
+            return tableView.dequeueReusableCell(withIdentifier: "Undefined Section", for: indexPath)
+        }
+        
+        switch trueSection {
+        case .contents:
             if decodeRestInfoModel.status == 0 {
                 return self.setupIndicatorCell(indexPath: indexPath)
             } else {
                 return self.setupContentsCell(indexPath: indexPath)
             }
-        } else {
+        case .indicator:
             return self.setupIndicatorCell(indexPath: indexPath)
         }
     }
