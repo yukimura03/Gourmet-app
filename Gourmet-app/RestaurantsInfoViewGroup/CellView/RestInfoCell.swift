@@ -8,7 +8,7 @@
 
 import UIKit
 
-class RestInfoCell: UITableViewCell {
+final class RestInfoCell: UITableViewCell {
     
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var shopImage: UIImageView!

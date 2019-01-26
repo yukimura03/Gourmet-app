@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoadingCell: UITableViewCell {
+final class LoadingCell: UITableViewCell {
     
     var indicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.gray)
     
@@ -35,4 +35,5 @@ class LoadingCell: UITableViewCell {
         let y = bounds.size.height/2
         indicator.center = CGPoint(x: x, y: y)
     }
+    
 }

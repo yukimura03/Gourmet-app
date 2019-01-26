@@ -26,12 +26,9 @@ final class AreaListViewController: UIViewController, UITableViewDataSource, UIT
         navigationItem.backBarButtonItem = backButtonItem
         
         decodeAreaListModel.getAreaNameAndCode()
-        //decodeAreaListModel.dispatchGroup.notify(queue: .main) {
-            print(self.decodeAreaListModel.areaInTokyo)
-            self.reloadData()
-        //}
     }
     
+    // ---テーブルビューを作る部分---
     // cellの数はエリア名の数
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return decodeAreaListModel.areaInTokyo.count
@@ -43,6 +40,7 @@ final class AreaListViewController: UIViewController, UITableViewDataSource, UIT
         cell.textLabel?.text = decodeAreaListModel.areaInTokyo[indexPath.row].areanameL
         return cell
     }
+    // ---ここまで---
     
     /// テーブルビューを再読み込みする
     func reloadData() {
@@ -67,5 +65,6 @@ final class AreaListViewController: UIViewController, UITableViewDataSource, UIT
             areaListView.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
     }
+    
 }
 

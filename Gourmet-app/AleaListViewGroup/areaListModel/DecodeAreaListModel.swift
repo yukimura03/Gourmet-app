@@ -8,13 +8,10 @@
 
 import Foundation
 
-class DecodeAreaListModel {
+final class DecodeAreaListModel {
     let areaListModel = AreaListModel()
     /// AreaInTokyo（東京のエリア情報）を入れる配列
     var areaInTokyo: [AreaListModel.AreaInTokyo] = []
-    
-    let dispatchGroup = DispatchGroup()
-    let dispatchQueue = DispatchQueue(label: "queue")
     
     /// バンドル内にあるJSONデータを読み込む
     func getJSONData() throws -> Data? {
@@ -26,11 +23,9 @@ class DecodeAreaListModel {
     
     /// 読み込んだJSONデータからエリアの名前とコードだけ抜き出す
     func getAreaNameAndCode() {
-        //dispatchGroup.enter()
         guard let data = try? getJSONData() else { return }
         guard let areaData: [AreaListModel.AreaInTokyo] = try? JSONDecoder().decode([AreaListModel.AreaInTokyo].self, from: data!) else { return }
         // 抜き出したデータをareaInTokyo（配列）に反映させる
         areaInTokyo = areaData
-        //dispatchGroup.leave()
     }
 }

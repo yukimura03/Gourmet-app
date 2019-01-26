@@ -8,7 +8,8 @@
 
 import Foundation
 
-class DecodeRestInfoModel {
+final class DecodeRestInfoModel {
+    
     let restInfoModel = RestInfoModel()
     /// レストランデータを１店舗ずつ区切って入れる配列
     var restInfo = [RestInfoModel.restaurantsData]()
@@ -23,13 +24,13 @@ class DecodeRestInfoModel {
     let id = "a6cababca853c93d265f18664e323093"
     /// １ページに載せる店舗数
     let hitPerPage = 50
-    /// 何ページ目
+    /// 表示するページ
     var offsetPage = 1
-    /// 前の画面で選んだエリアのエリアコードを受け取る
+    /// 前の画面で選んだcellのエリアコード
     var areacode = ""
-    /// 前の画面で選んだエリアの名前を受け取る
+    /// 前の画面で選んだcellのエリア名
     var areaname = ""
-    /// 選んだエリアの総件数を入れる
+    /// 選んだエリアの総件数
     var totalHitCount = 0
     
     /// レストランデータ一覧を取得
@@ -60,4 +61,5 @@ class DecodeRestInfoModel {
         // リクエストを実行
         task.resume()
     }
+    
 }

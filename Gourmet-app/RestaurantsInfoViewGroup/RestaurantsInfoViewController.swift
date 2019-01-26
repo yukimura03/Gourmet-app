@@ -60,6 +60,11 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         }
     }
     
+    enum Section: Int {
+        case contents = 0
+        case indicator = 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             if decodeRestInfoModel.status == 0 {
@@ -72,51 +77,52 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         }
     }
     
-    enum section: Int {
-        case contents = 0
-        case indicator = 1
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
             if decodeRestInfoModel.status == 0 {
-                let LoadingCell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath) as! LoadingCell
-                LoadingCell.indicator.startAnimating() // indicatorを表示させる
-                
-                return LoadingCell
+                return self.setupIndicatorCell(indexPath: indexPath)
             } else {
-                // 1つ目のセクションの中身
-                let cell = restInfoView.dequeueReusableCell(withIdentifier: "RestInfoCell", for: indexPath) as! RestInfoCell
-                
-                // サムネイルを表示させる処理
-                cell.shopImage.layer.cornerRadius = cell.shopImage.frame.size.width * 0.1
-                cell.shopImage.clipsToBounds = true
-                let url = URL(string: decodeRestInfoModel.restInfo[indexPath.row].imageUrl.shopImage)
-                if url != nil {
-                    let data = try? Data(contentsOf: url!)
-                    cell.shopImage.image = UIImage(data: data!)
-                } else {
-                    cell.shopImage.image = UIImage(named: "noimage")
-                }
-                
-                // それ以外の文字を表示させる
-                cell.name.text = decodeRestInfoModel.restInfo[indexPath.row].name
-                 cell.timeRequired.text = "\(decodeRestInfoModel.restInfo[indexPath.row].access.station)から徒歩\(decodeRestInfoModel.restInfo[indexPath.row].access.walk)分"
-                 cell.address.text = decodeRestInfoModel.restInfo[indexPath.row].address
-                 cell.tel.text = decodeRestInfoModel.restInfo[indexPath.row].tel
-                 cell.budget.text = "¥\((decodeRestInfoModel.restInfo[indexPath.row].budget).withComma)"
-                
-                return cell
+                return self.setupContentsCell(indexPath: indexPath)
             }
         } else {
-            // 2つ目のセクションの中身
-            let LoadingCell = tableView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath) as! LoadingCell
-            LoadingCell.indicator.startAnimating() // indicatorを表示させる
-            
-            return LoadingCell
+            return self.setupIndicatorCell(indexPath: indexPath)
         }
-    }   
+    }
+    
+    /// indicatorを表示させる
+    private func setupIndicatorCell(indexPath: IndexPath) -> UITableViewCell {
+        let LoadingCell = restInfoView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath) as! LoadingCell
+        LoadingCell.indicator.startAnimating() // indicatorを表示させる
+        
+        return LoadingCell
+    }
+    
+    /// cellにレストラン情報を表示させる
+    private func setupContentsCell(indexPath: IndexPath) -> UITableViewCell {
+        // 1つ目のセクションの中身
+        let cell = restInfoView.dequeueReusableCell(withIdentifier: "RestInfoCell", for: indexPath) as! RestInfoCell
+        
+        // サムネイルを表示させる処理
+        cell.shopImage.layer.cornerRadius = cell.shopImage.frame.size.width * 0.1
+        cell.shopImage.clipsToBounds = true
+        let url = URL(string: decodeRestInfoModel.restInfo[indexPath.row].imageUrl.shopImage)
+        if url != nil {
+            let data = try? Data(contentsOf: url!)
+            cell.shopImage.image = UIImage(data: data!)
+        } else {
+            cell.shopImage.image = UIImage(named: "noimage")
+        }
+        
+        // それ以外の文字を表示させる
+        cell.name.text = decodeRestInfoModel.restInfo[indexPath.row].name
+        cell.timeRequired.text = "\(decodeRestInfoModel.restInfo[indexPath.row].access.station)から徒歩\(decodeRestInfoModel.restInfo[indexPath.row].access.walk)分"
+        cell.address.text = decodeRestInfoModel.restInfo[indexPath.row].address
+        cell.tel.text = decodeRestInfoModel.restInfo[indexPath.row].tel
+        cell.budget.text = "¥\((decodeRestInfoModel.restInfo[indexPath.row].budget).withComma)"
+        
+        return cell
+    }
     // ---ここまで---
     
     // 選択したセルの色を戻す

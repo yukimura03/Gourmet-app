@@ -8,9 +8,9 @@
 
 import UIKit
 
-class AreaListModel {
+final class AreaListModel {
     
-    /// JSONからエリアの名前とコードだけ取り出すための箱
+    /// JSONからエリアの名前とコードだけ入れるEntity
     struct AreaInTokyo: Codable {
         let areanameL: String
         let areacodeL: String
@@ -20,4 +20,5 @@ class AreaListModel {
             case areacodeL = "areacode_l"
         }
     }
+    
 }
