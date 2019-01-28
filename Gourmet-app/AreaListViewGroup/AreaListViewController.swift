@@ -33,10 +33,13 @@ final class AreaListViewController: UIViewController, UITableViewDataSource, UIT
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return decodeAreaListModel.areaInTokyo.count
     }
-    
     // cellにエリア名を表示する
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "AreaCell", for: indexPath)
+        return self.setupListCell(indexPath: indexPath)
+    }
+    /// エリア一覧が載ったセルを表示する
+    private func setupListCell(indexPath: IndexPath) -> UITableViewCell {
+        let cell = areaListView.dequeueReusableCell(withIdentifier: "AreaCell", for: indexPath)
         cell.textLabel?.text = decodeAreaListModel.areaInTokyo[indexPath.row].areanameL
         return cell
     }

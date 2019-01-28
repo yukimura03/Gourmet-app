@@ -20,6 +20,7 @@
 		49BD6E3421E7545100E5A3A0 /* AreaInTokyo.json in Resources */ = {isa = PBXBuildFile; fileRef = 49BD6E3321E7545100E5A3A0 /* AreaInTokyo.json */; };
 		49BD6E5821F42FD500E5A3A0 /* AreaListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BD6E5721F42FD500E5A3A0 /* AreaListModel.swift */; };
 		49BD6E5A21F440F700E5A3A0 /* RestInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BD6E5921F440F700E5A3A0 /* RestInfoModel.swift */; };
+		49FE2DEC21FF226200E8B211 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE2DEB21FF226200E8B211 /* Utility.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		49BD6E3321E7545100E5A3A0 /* AreaInTokyo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AreaInTokyo.json; sourceTree = "<group>"; };
 		49BD6E5721F42FD500E5A3A0 /* AreaListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaListModel.swift; sourceTree = "<group>"; };
 		49BD6E5921F440F700E5A3A0 /* RestInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestInfoModel.swift; sourceTree = "<group>"; };
+		49FE2DEB21FF226200E8B211 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,14 +71,14 @@
 			path = areaListModel;
 			sourceTree = "<group>";
 		};
-		4997EC1D21FC84C200CB253D /* AleaListViewGroup */ = {
+		4997EC1D21FC84C200CB253D /* AreaListViewGroup */ = {
 			isa = PBXGroup;
 			children = (
 				49B0855121D3C87F00D68D85 /* AreaListViewController.swift */,
 				49BD6E3321E7545100E5A3A0 /* AreaInTokyo.json */,
 				4997EC1821F9F0F400CB253D /* areaListModel */,
 			);
-			path = AleaListViewGroup;
+			path = AreaListViewGroup;
 			sourceTree = "<group>";
 		};
 		4997EC1E21FC84F200CB253D /* RestaurantsInfoViewGroup */ = {
@@ -109,8 +111,9 @@
 			isa = PBXGroup;
 			children = (
 				49B0854F21D3C87F00D68D85 /* AppDelegate.swift */,
+				49FE2DEB21FF226200E8B211 /* Utility.swift */,
 				49B0855321D3C87F00D68D85 /* Main.storyboard */,
-				4997EC1D21FC84C200CB253D /* AleaListViewGroup */,
+				4997EC1D21FC84C200CB253D /* AreaListViewGroup */,
 				4997EC1E21FC84F200CB253D /* RestaurantsInfoViewGroup */,
 				49B0855621D3C88000D68D85 /* Assets.xcassets */,
 				49B0855821D3C88000D68D85 /* LaunchScreen.storyboard */,
@@ -200,6 +203,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49FE2DEC21FF226200E8B211 /* Utility.swift in Sources */,
 				49B0856221D509C300D68D85 /* RestaurantsInfoViewController.swift in Sources */,
 				49B0855221D3C87F00D68D85 /* AreaListViewController.swift in Sources */,
 				49B0855021D3C87F00D68D85 /* AppDelegate.swift in Sources */,

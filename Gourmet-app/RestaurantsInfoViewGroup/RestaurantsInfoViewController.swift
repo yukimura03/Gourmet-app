@@ -8,16 +8,6 @@
 
 import UIKit
 
-/// 3桁ずつコンマを打つextention
-extension Int {
-    var withComma: String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        let commaString = formatter.string(from: self as NSNumber)
-        return commaString ?? "\(self)"
-    }
-}
-
 final class RestaurantsInfoViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var restInfoView: UITableView!
@@ -30,17 +20,20 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        restInfoView.delegate = self
+        restInfoView.dataSource = self
         
+        // cellの最大の高さを設定
         self.restInfoView.estimatedRowHeight = 100
         self.restInfoView.rowHeight = UITableView.automaticDimension
         
-        restInfoView.delegate = self
-        restInfoView.dataSource = self
+        // 前の画面で選んだエリア情報をModelに渡す
         decodeRestInfoModel.areaname = areaname
         decodeRestInfoModel.areacode = areacode
         
         decodeRestInfoModel.getRestData()
-        decodeRestInfoModel.dispatchGroup.notify(queue: .main){ // 処理終わりました、を受け取ったら動く
+        // 処理終わりました、を受け取ったら動く
+        decodeRestInfoModel.dispatchGroup.notify(queue: .main){
             self.navigationItem.title = "\(self.decodeRestInfoModel.areaname)の飲食店 \(self.decodeRestInfoModel.totalHitCount.withComma)件"
             self.reloadData()
         }
@@ -51,68 +44,63 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         self.restInfoView.reloadData()
     }
     
-    // ---テーブルビューを作る部分---
-    func numberOfSections(in tableView: UITableView) -> Int {
-        if decodeRestInfoModel.status == 0 || decodeRestInfoModel.status == 1 {
-            return 1
-        } else {
-            return 2
-        }
-    }
-    
-    enum Section: Int {
+    /* ---テーブルビューを作る部分--- */
+    enum sectionType: Int {
         case contents = 0
         case indicator
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if decodeRestInfoModel.status == .reloading {
+            return 2
+        } else {    // loadingとfinishの時
+            return 1
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        switch Section(rawValue: section) {
-        case .some(.contents):
-            if decodeRestInfoModel.status == 0 {
-                return 1 // inidicatorを一つ表示させる
-            } else {
+        if sectionType(rawValue: section) == .some(.contents){
+            if decodeRestInfoModel.status == .loading {
+                // inidicatorのcellを一つだけ表示させる
+                return 1
+            } else { // finishとreloadingの時
+                // 店舗数分のcellを表示する
                 return decodeRestInfoModel.restInfo.count
             }
-        case .some(.indicator):
-            return 1 // inidicatorを一つ表示させる
-        case .none:
-            return 0
+        } else { // sectionType.indicator
+            return 1
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        guard let trueSection = Section(rawValue: indexPath.section) else {
+        // エラー処理
+        guard let safeSection = sectionType(rawValue: indexPath.section) else {
             return tableView.dequeueReusableCell(withIdentifier: "Undefined Section", for: indexPath)
         }
-        
-        switch trueSection {
-        case .contents:
-            if decodeRestInfoModel.status == 0 {
+        if safeSection == .contents {
+            if decodeRestInfoModel.status == .loading {
                 return self.setupIndicatorCell(indexPath: indexPath)
             } else {
                 return self.setupContentsCell(indexPath: indexPath)
             }
-        case .indicator:
+        } else {
             return self.setupIndicatorCell(indexPath: indexPath)
         }
     }
     
-    /// indicatorを表示させる
+    /// cellにindicatorを表示させる
     private func setupIndicatorCell(indexPath: IndexPath) -> UITableViewCell {
         let LoadingCell = restInfoView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath) as! LoadingCell
         LoadingCell.indicator.startAnimating() // indicatorを表示させる
         
         return LoadingCell
     }
-    
     /// cellにレストラン情報を表示させる
     private func setupContentsCell(indexPath: IndexPath) -> UITableViewCell {
         // 1つ目のセクションの中身
         let cell = restInfoView.dequeueReusableCell(withIdentifier: "RestInfoCell", for: indexPath) as! RestInfoCell
         
-        // サムネイルを表示させる処理
+        // サムネイルを表示させる処理（角丸）
         cell.shopImage.layer.cornerRadius = cell.shopImage.frame.size.width * 0.1
         cell.shopImage.clipsToBounds = true
         let url = URL(string: decodeRestInfoModel.restInfo[indexPath.row].imageUrl.shopImage)
@@ -132,9 +120,9 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         
         return cell
     }
-    // ---ここまで---
+    /* ---ここまで--- */
     
-    // 選択したセルの色を戻す
+    // 選択したセルのハイライトを消す
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if let indexPathForSelectedRow = tableView.indexPathForSelectedRow {
             restInfoView.deselectRow(at: indexPathForSelectedRow, animated: true)
@@ -149,7 +137,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
             if self.restInfoView.contentOffset.y + self.restInfoView.frame.size.height > self.restInfoView.contentSize.height && self.restInfoView.isDragging {
                 
                 // 読み込み中ステータスに変更
-                self.decodeRestInfoModel.status = 2
+                self.decodeRestInfoModel.status = .reloading
                 // indicatorを表示するためにTableViewを更新する
                 self.reloadData()
                 
@@ -159,7 +147,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
                 self.decodeRestInfoModel.getRestData()
                 
                 self.decodeRestInfoModel.dispatchGroup.notify(queue: .main) {
-                    self.decodeRestInfoModel.status = 1
+                    self.decodeRestInfoModel.status = .finish
                     self.reloadData()
                 }
             }

@@ -8,8 +8,9 @@
 
 import UIKit
 
+/// 読み込み中のindicatorを表示するcell
 final class LoadingCell: UITableViewCell {
-    
+    /// データ読み込み中に表示するindicator
     var indicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.gray)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String!) {

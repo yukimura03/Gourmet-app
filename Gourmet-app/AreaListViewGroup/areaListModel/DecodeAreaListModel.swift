@@ -10,7 +10,7 @@ import Foundation
 
 final class DecodeAreaListModel {
     let areaListModel = AreaListModel()
-    /// AreaInTokyo（東京のエリア情報）を入れる配列
+    /// decode済みのエリア情報を入れる配列
     var areaInTokyo: [AreaListModel.AreaInTokyo] = []
     
     /// バンドル内にあるJSONデータを読み込む
@@ -21,7 +21,7 @@ final class DecodeAreaListModel {
         return try Data(contentsOf: url)
     }
     
-    /// 読み込んだJSONデータからエリアの名前とコードだけ抜き出す
+    /// JSONファイルを読み込み、decodeしてエリアの名前とコードだけ抜き出す
     func getAreaNameAndCode() {
         guard let data = try? getJSONData() else { return }
         guard let areaData: [AreaListModel.AreaInTokyo] = try? JSONDecoder().decode([AreaListModel.AreaInTokyo].self, from: data!) else { return }

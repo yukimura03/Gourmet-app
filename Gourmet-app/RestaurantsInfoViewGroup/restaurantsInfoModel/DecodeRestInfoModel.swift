@@ -17,8 +17,14 @@ final class DecodeRestInfoModel {
     let dispatchGroup = DispatchGroup()
     let dispatchQueue = DispatchQueue(label: "queue")
     
-    /// 現在の状態 / 0=読み込み中　1=読み込み完了、2=再読み込み中
-    var status = 0
+    enum statusType {
+        /// 読み込み中
+        case loading
+        /// 読み込み完了
+        case finish
+        /// 再読み込み中
+        case reloading
+    }
     
     /// 自分で発行したKey
     let id = "a6cababca853c93d265f18664e323093"
@@ -32,8 +38,10 @@ final class DecodeRestInfoModel {
     var areaname = ""
     /// 選んだエリアの総件数
     var totalHitCount = 0
+    /// 現在の状態
+    var status: statusType = .loading
     
-    /// レストランデータ一覧を取得
+    /// レストランデータのJSONを取得してdecodeする
     func getRestData() {
         dispatchGroup.enter() // 処理始めます
         
@@ -51,7 +59,7 @@ final class DecodeRestInfoModel {
                 let response = try decoder.decode(RestInfoModel.apiData.self, from: data)
                 self.restInfo += response.rest
                 self.totalHitCount = response.total_hit_count
-                self.status = 1
+                self.status = .finish
                 
                 self.dispatchGroup.leave()
             } catch {

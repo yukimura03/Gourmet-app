@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// レストラン情報を表示するcell
 final class RestInfoCell: UITableViewCell {
     
     @IBOutlet weak var name: UILabel!
