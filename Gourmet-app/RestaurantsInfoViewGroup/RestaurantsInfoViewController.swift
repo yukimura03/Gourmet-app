@@ -51,25 +51,33 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        if decodeRestInfoModel.status == .reloading {
-            return 2
-        } else {    // loadingとfinishの時
+        switch decodeRestInfoModel.status {
+        case .loading:
             return 1
+        case .finish:
+            return 1
+        case .reloading:
+            return 2
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if sectionType(rawValue: section) == .some(.contents){
-            if decodeRestInfoModel.status == .loading {
-                // inidicatorのcellを一つだけ表示させる
+        switch sectionType(rawValue: section) {
+        case .some(.contents):
+            switch decodeRestInfoModel.status {
+            case .loading:
                 return 1
-            } else { // finishとreloadingの時
-                // 店舗数分のcellを表示する
+            case .finish:
+                return decodeRestInfoModel.restInfo.count
+            case .reloading:
                 return decodeRestInfoModel.restInfo.count
             }
-        } else { // sectionType.indicator
+        case .some(.indicator):
             return 1
+        case .none:
+            return 0
         }
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -77,13 +85,14 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         guard let safeSection = sectionType(rawValue: indexPath.section) else {
             return tableView.dequeueReusableCell(withIdentifier: "Undefined Section", for: indexPath)
         }
-        if safeSection == .contents {
+        switch safeSection {
+        case .contents:
             if decodeRestInfoModel.status == .loading {
                 return self.setupIndicatorCell(indexPath: indexPath)
             } else {
                 return self.setupContentsCell(indexPath: indexPath)
             }
-        } else {
+        case .indicator:
             return self.setupIndicatorCell(indexPath: indexPath)
         }
     }
