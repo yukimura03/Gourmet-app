@@ -41,11 +41,19 @@ final class DecodeRestInfoModel {
     /// 現在の状態
     var status: statusType = .loading
     
+    // エラーの時
+    /// エラーコード
+    var errorCode: Int = 0
+    /// エラーメッセージ
+    var errorMessage: String = ""
+    
     /// レストランデータのJSONを取得してdecodeする
     func getRestData() {
         dispatchGroup.enter() // 処理始めます
         
         let url = URL(string: "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(id)&areacode_l=\(areacode)&hit_per_page=\(hitPerPage)&offset_page=\(offsetPage)")!
+        
+        // &areacode_l=\(areacode)&hit_per_page=\(hitPerPage)&offset_page=\(offsetPage)
         
         let request = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: request) { (data, urlResponse, error) in
@@ -56,10 +64,19 @@ final class DecodeRestInfoModel {
             }
             do {
                 let decoder = JSONDecoder()
-                let response = try decoder.decode(RestInfoModel.apiData.self, from: data)
-                self.restInfo += response.rest
-                self.totalHitCount = response.total_hit_count
-                self.status = .finish
+                
+                if case (200..<300)? = (urlResponse as? HTTPURLResponse)?.statusCode{
+                    let response = try decoder.decode(RestInfoModel.apiData.self, from: data)
+                    
+                    self.restInfo += response.rest
+                    self.totalHitCount = response.total_hit_count
+                    self.status = .finish
+                    
+                } else {
+                    let response = try decoder.decode(RestInfoModel.errorData.self, from: data)
+                    self.errorCode = response.error[0].code
+                    self.errorMessage = response.error[0].message
+                }
                 
                 self.dispatchGroup.leave()
             } catch {

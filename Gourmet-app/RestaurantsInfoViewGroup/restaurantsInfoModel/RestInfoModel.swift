@@ -60,4 +60,13 @@ final class RestInfoModel {
         }
     }
     
+    /// エラーの場合の情報
+    struct errorData: Codable {
+        let error: [ErrorMessage]
+    }
+    struct ErrorMessage: Codable {
+        let code: Int
+        let message: String
+    }
+    
 }
