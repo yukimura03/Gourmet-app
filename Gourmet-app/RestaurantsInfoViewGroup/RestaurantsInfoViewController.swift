@@ -153,16 +153,18 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         // 1つ目のセクションの中身
         let cell = restInfoView.dequeueReusableCell(withIdentifier: "RestInfoCell", for: indexPath) as! RestInfoCell
         
+        let image: UIImage?
+        let urlString = decodeRestInfoModel.restInfo[indexPath.row].imageUrl.shopImage
+        if let url = URL(string: urlString), let data = try? Data(contentsOf: url) {
+            image = UIImage(data: data)
+        } else {
+            image = UIImage(named: "noimage")
+        }
+        cell.shopImage.image = image
+        
         // サムネイルを表示させる処理（角丸）
         cell.shopImage.layer.cornerRadius = cell.shopImage.frame.size.width * 0.1
         cell.shopImage.clipsToBounds = true
-        let url = URL(string: decodeRestInfoModel.restInfo[indexPath.row].imageUrl.shopImage)
-        if url != nil {
-            let data = try? Data(contentsOf: url!)
-            cell.shopImage.image = UIImage(data: data!)
-        } else {
-            cell.shopImage.image = UIImage(named: "noimage")
-        }
         
         // それ以外の文字を表示させる
         cell.name.text = decodeRestInfoModel.restInfo[indexPath.row].name
