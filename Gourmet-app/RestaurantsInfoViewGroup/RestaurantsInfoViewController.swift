@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Reachability
 
 final class RestaurantsInfoViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -14,6 +15,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     
     let restInfoModel = RestInfoModel()
     let decodeRestInfoModel = DecodeRestInfoModel()
+    let reachability = Reachability()!
     
     var areaname = ""
     var areacode = ""
@@ -22,6 +24,8 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         super.viewDidLoad()
         restInfoView.delegate = self
         restInfoView.dataSource = self
+        
+        check()
         
         // cellの最大の高さを設定
         self.restInfoView.estimatedRowHeight = 100
@@ -38,6 +42,8 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
                 self.navigationItem.title = "\(self.decodeRestInfoModel.areaname)の飲食店 \(self.decodeRestInfoModel.totalHitCount.withComma)件"
                 self.reloadData()
             } else {
+                self.alertTitle = String(self.decodeRestInfoModel.errorCode)
+                self.alertMessage = self.decodeRestInfoModel.errorMessage
                 self.showAlert()
             }
         }
@@ -47,12 +53,27 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     func reloadData() {
         self.restInfoView.reloadData()
     }
+    
+    var alertTitle = ""
+    var alertMessage = ""
+    
     /// アラートでエラーメッセージを表示させる
     func showAlert(){
-        let alert = UIAlertController(title: "エラー：\(String(self.decodeRestInfoModel.errorCode))", message: self.decodeRestInfoModel.errorMessage, preferredStyle: .alert)
-        let okButton = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(okButton)
-        self.present(alert, animated: true, completion: nil)
+        let alertController = UIAlertController(title: "エラー：\(alertTitle)", message: alertMessage, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "OK", style: .default) { action in
+            self.navigationController?.popViewController(animated: true)
+        }
+        alertController.addAction(okButton)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    /// ネットに繋がっているか確認する
+    func check() {
+        if reachability.connection == .none {
+            alertTitle = "オフライン"
+            alertMessage = "通信状況を確認してください"
+            showAlert()
+        }
     }
     
     // 選択したセルのハイライトを消す

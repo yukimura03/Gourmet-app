@@ -30,7 +30,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="LN8-Sg-h3T" kind="show" identifier="showDetail" id="tej-85-3Vp"/>
+                                            <segue destination="LN8-Sg-h3T" kind="show" identifier="showDetail" id="GZe-aF-TsZ"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

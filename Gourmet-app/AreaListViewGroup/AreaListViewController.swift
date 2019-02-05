@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Reachability
 
 final class AreaListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -66,34 +65,6 @@ final class AreaListViewController: UIViewController, UITableViewDataSource, UIT
         super.viewDidAppear(animated)
         if let indexPathForSelectedRow = areaListView.indexPathForSelectedRow {
             areaListView.deselectRow(at: indexPathForSelectedRow, animated: true)
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        //performSegue(withIdentifier: "showDetail", sender: nil)
-        //check()
-        
-    }
-    /* ネットが繋がってないとき */
-    /// ネット通信が切れている事をアラート表示する
-    func communicationAlert() {
-        let alert = UIAlertController(title: "インターネット通信がありません", message: "通信状況を確認してください。", preferredStyle: .alert)
-        let okButton = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(okButton)
-        present(alert, animated: true, completion: nil)
-    }
-    
-    let reachability = Reachability()!
-    /// ネットに繋がっているか確認する
-    func check() {
-        reachability.whenUnreachable = { _ in
-            self.communicationAlert()
-        }
-        do {
-            try reachability.startNotifier()
-        } catch {
-            print("Unable to start notifier")
         }
     }
     

@@ -11,6 +11,8 @@ import UIKit
 /// レストラン情報を表示するcell
 final class RestInfoCell: UITableViewCell {
     
+    let decodeRestInfoModel = DecodeRestInfoModel()
+    
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var shopImage: UIImageView!
     @IBOutlet weak var timeRequired: UILabel!
@@ -18,4 +20,14 @@ final class RestInfoCell: UITableViewCell {
     @IBOutlet weak var tel: UILabel!
     @IBOutlet weak var budget: UILabel!
     
+    /*
+    func setCell(model: RestInfoModel, indexPath: indexPath) {
+        
+        name.text = decodeRestInfoModel.restInfo[indexPath.row].name
+        timeRequired.text = "\(decodeRestInfoModel.restInfo[indexPath.row].access.station)から徒歩\(decodeRestInfoModel.restInfo[indexPath.row].access.walk)分"
+        address.text = decodeRestInfoModel.restInfo[indexPath.row].address
+        tel.text = decodeRestInfoModel.restInfo[indexPath.row].tel
+        budget.text = "¥\((decodeRestInfoModel.restInfo[indexPath.row].budget).withComma)"
+        
+    }*/
 }
