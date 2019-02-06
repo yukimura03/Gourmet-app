@@ -11,8 +11,6 @@ import UIKit
 /// レストラン情報を表示するcell
 final class RestInfoCell: UITableViewCell {
     
-    let decodeRestInfoModel = DecodeRestInfoModel()
-    
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var shopImage: UIImageView!
     @IBOutlet weak var timeRequired: UILabel!
@@ -20,14 +18,28 @@ final class RestInfoCell: UITableViewCell {
     @IBOutlet weak var tel: UILabel!
     @IBOutlet weak var budget: UILabel!
     
-    /*
-    func setCell(model: RestInfoModel, indexPath: indexPath) {
+    // １つのcellに対して１店舗分のデータだけ渡す
+    func setCell(model: RestInfoModel.restaurantsData) {
+        let image: UIImage?
         
-        name.text = decodeRestInfoModel.restInfo[indexPath.row].name
-        timeRequired.text = "\(decodeRestInfoModel.restInfo[indexPath.row].access.station)から徒歩\(decodeRestInfoModel.restInfo[indexPath.row].access.walk)分"
-        address.text = decodeRestInfoModel.restInfo[indexPath.row].address
-        tel.text = decodeRestInfoModel.restInfo[indexPath.row].tel
-        budget.text = "¥\((decodeRestInfoModel.restInfo[indexPath.row].budget).withComma)"
+        let urlString = model.imageUrl.shopImage
+        if let url = URL(string: urlString), let data = try? Data(contentsOf: url) {
+            image = UIImage(data: data)
+        } else {
+            image = UIImage(named: "noimage")
+        }
+        shopImage.image = image
         
-    }*/
+        // サムネイルを表示させる処理（角丸）
+        shopImage.layer.cornerRadius = shopImage.frame.size.width * 0.1
+        shopImage.clipsToBounds = true
+        
+        // それ以外の文字を表示させる
+        name.text = model.name
+        timeRequired.text = "\(model.access.station)から徒歩\(model.access.walk)分"
+        address.text = model.address
+        tel.text = model.tel
+        budget.text = "¥\((model.budget).withComma)"
+        
+    }
 }

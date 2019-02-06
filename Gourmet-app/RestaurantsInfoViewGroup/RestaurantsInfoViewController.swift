@@ -22,10 +22,10 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        connectionCheck()
+        
         restInfoView.delegate = self
         restInfoView.dataSource = self
-        
-        check()
         
         // cellの最大の高さを設定
         self.restInfoView.estimatedRowHeight = 100
@@ -68,7 +68,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     }
     
     /// ネットに繋がっているか確認する
-    func check() {
+    func connectionCheck() {
         if reachability.connection == .none {
             alertTitle = "オフライン"
             alertMessage = "通信状況を確認してください"
@@ -174,25 +174,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         // 1つ目のセクションの中身
         let cell = restInfoView.dequeueReusableCell(withIdentifier: "RestInfoCell", for: indexPath) as! RestInfoCell
         
-        let image: UIImage?
-        let urlString = decodeRestInfoModel.restInfo[indexPath.row].imageUrl.shopImage
-        if let url = URL(string: urlString), let data = try? Data(contentsOf: url) {
-            image = UIImage(data: data)
-        } else {
-            image = UIImage(named: "noimage")
-        }
-        cell.shopImage.image = image
-        
-        // サムネイルを表示させる処理（角丸）
-        cell.shopImage.layer.cornerRadius = cell.shopImage.frame.size.width * 0.1
-        cell.shopImage.clipsToBounds = true
-        
-        // それ以外の文字を表示させる
-        cell.name.text = decodeRestInfoModel.restInfo[indexPath.row].name
-        cell.timeRequired.text = "\(decodeRestInfoModel.restInfo[indexPath.row].access.station)から徒歩\(decodeRestInfoModel.restInfo[indexPath.row].access.walk)分"
-        cell.address.text = decodeRestInfoModel.restInfo[indexPath.row].address
-        cell.tel.text = decodeRestInfoModel.restInfo[indexPath.row].tel
-        cell.budget.text = "¥\((decodeRestInfoModel.restInfo[indexPath.row].budget).withComma)"
+        cell.setCell(model: decodeRestInfoModel.restInfo[indexPath.row])
         
         return cell
     }
