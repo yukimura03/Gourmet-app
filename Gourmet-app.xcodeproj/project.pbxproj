@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		3275980B969256F88C5F8EF7 /* Pods_Gourmet_app.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CBC39A194FB039803355B20 /* Pods_Gourmet_app.framework */; };
+		492C3B7C220C67C70081458A /* Restaurant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C3B7B220C67C70081458A /* Restaurant.swift */; };
+		492C3B7E220C685C0081458A /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C3B7D220C685C0081458A /* APIResponse.swift */; };
+		492C3B80220C6AB70081458A /* GnaviClientError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C3B7F220C6AB70081458A /* GnaviClientError.swift */; };
+		492C3B82220C6B520081458A /* GnaviAPIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C3B81220C6B520081458A /* GnaviAPIError.swift */; };
+		492C3B86220C6DCB0081458A /* GnaviRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C3B85220C6DCB0081458A /* GnaviRequest.swift */; };
+		492C3B88220C6EBD0081458A /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C3B87220C6EBD0081458A /* HTTPMethod.swift */; };
+		492C3B8A220C712F0081458A /* GnaviAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C3B89220C712E0081458A /* GnaviAPI.swift */; };
 		49688CFE21DF505500027BD3 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49688CFD21DF505500027BD3 /* LoadingCell.swift */; };
 		4997EC1521F9ED0800CB253D /* DecodeRestInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4997EC1421F9ED0800CB253D /* DecodeRestInfoModel.swift */; };
 		4997EC1C21F9FC5A00CB253D /* DecodeAreaListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4997EC1B21F9FC5A00CB253D /* DecodeAreaListModel.swift */; };
@@ -28,6 +35,13 @@
 /* Begin PBXFileReference section */
 		14DB1E57D52D21C153DD4891 /* Pods-Gourmet-app.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gourmet-app.release.xcconfig"; path = "Pods/Target Support Files/Pods-Gourmet-app/Pods-Gourmet-app.release.xcconfig"; sourceTree = "<group>"; };
 		3CBC39A194FB039803355B20 /* Pods_Gourmet_app.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Gourmet_app.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		492C3B7B220C67C70081458A /* Restaurant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Restaurant.swift; sourceTree = "<group>"; };
+		492C3B7D220C685C0081458A /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
+		492C3B7F220C6AB70081458A /* GnaviClientError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GnaviClientError.swift; sourceTree = "<group>"; };
+		492C3B81220C6B520081458A /* GnaviAPIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GnaviAPIError.swift; sourceTree = "<group>"; };
+		492C3B85220C6DCB0081458A /* GnaviRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GnaviRequest.swift; sourceTree = "<group>"; };
+		492C3B87220C6EBD0081458A /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		492C3B89220C712E0081458A /* GnaviAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GnaviAPI.swift; sourceTree = "<group>"; };
 		49688CFD21DF505500027BD3 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		4997EC1421F9ED0800CB253D /* DecodeRestInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeRestInfoModel.swift; sourceTree = "<group>"; };
 		4997EC1B21F9FC5A00CB253D /* DecodeAreaListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeAreaListModel.swift; sourceTree = "<group>"; };
@@ -77,6 +91,34 @@
 				14DB1E57D52D21C153DD4891 /* Pods-Gourmet-app.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		492C3B76220C65D20081458A /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				492C3B85220C6DCB0081458A /* GnaviRequest.swift */,
+				492C3B89220C712E0081458A /* GnaviAPI.swift */,
+				492C3B87220C6EBD0081458A /* HTTPMethod.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		492C3B77220C66E80081458A /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				492C3B7D220C685C0081458A /* APIResponse.swift */,
+				492C3B7B220C67C70081458A /* Restaurant.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		492C3B78220C66F10081458A /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				492C3B7F220C6AB70081458A /* GnaviClientError.swift */,
+				492C3B81220C6B520081458A /* GnaviAPIError.swift */,
+			);
+			path = Error;
 			sourceTree = "<group>";
 		};
 		4997EC1321F9EB9500CB253D /* restaurantsInfoModel */ = {
@@ -141,9 +183,12 @@
 				49B0854F21D3C87F00D68D85 /* AppDelegate.swift */,
 				49FE2DEB21FF226200E8B211 /* Utility.swift */,
 				49B0855321D3C87F00D68D85 /* Main.storyboard */,
+				492C3B78220C66F10081458A /* Error */,
+				492C3B77220C66E80081458A /* Response */,
+				492C3B76220C65D20081458A /* Request */,
+				49B0855621D3C88000D68D85 /* Assets.xcassets */,
 				4997EC1D21FC84C200CB253D /* AreaListViewGroup */,
 				4997EC1E21FC84F200CB253D /* RestaurantsInfoViewGroup */,
-				49B0855621D3C88000D68D85 /* Assets.xcassets */,
 				49B0855821D3C88000D68D85 /* LaunchScreen.storyboard */,
 				49B0855B21D3C88000D68D85 /* Info.plist */,
 			);
@@ -281,13 +326,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				49FE2DEC21FF226200E8B211 /* Utility.swift in Sources */,
+				492C3B80220C6AB70081458A /* GnaviClientError.swift in Sources */,
 				49B0856221D509C300D68D85 /* RestaurantsInfoViewController.swift in Sources */,
 				49B0855221D3C87F00D68D85 /* AreaListViewController.swift in Sources */,
+				492C3B8A220C712F0081458A /* GnaviAPI.swift in Sources */,
+				492C3B7C220C67C70081458A /* Restaurant.swift in Sources */,
 				49B0855021D3C87F00D68D85 /* AppDelegate.swift in Sources */,
+				492C3B7E220C685C0081458A /* APIResponse.swift in Sources */,
 				4997EC1C21F9FC5A00CB253D /* DecodeAreaListModel.swift in Sources */,
 				4997EC1521F9ED0800CB253D /* DecodeRestInfoModel.swift in Sources */,
 				49B0856421D524D100D68D85 /* RestInfoCell.swift in Sources */,
+				492C3B86220C6DCB0081458A /* GnaviRequest.swift in Sources */,
+				492C3B88220C6EBD0081458A /* HTTPMethod.swift in Sources */,
 				49BD6E5A21F440F700E5A3A0 /* RestInfoModel.swift in Sources */,
+				492C3B82220C6B520081458A /* GnaviAPIError.swift in Sources */,
 				49688CFE21DF505500027BD3 /* LoadingCell.swift in Sources */,
 				49BD6E5821F42FD500E5A3A0 /* AreaListModel.swift in Sources */,
 			);
