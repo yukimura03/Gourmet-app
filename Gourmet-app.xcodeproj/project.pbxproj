@@ -182,12 +182,12 @@
 			children = (
 				49B0854F21D3C87F00D68D85 /* AppDelegate.swift */,
 				49FE2DEB21FF226200E8B211 /* Utility.swift */,
+				4997EC1D21FC84C200CB253D /* AreaListViewGroup */,
 				49B0855321D3C87F00D68D85 /* Main.storyboard */,
 				492C3B78220C66F10081458A /* Error */,
 				492C3B77220C66E80081458A /* Response */,
 				492C3B76220C65D20081458A /* Request */,
 				49B0855621D3C88000D68D85 /* Assets.xcassets */,
-				4997EC1D21FC84C200CB253D /* AreaListViewGroup */,
 				4997EC1E21FC84F200CB253D /* RestaurantsInfoViewGroup */,
 				49B0855821D3C88000D68D85 /* LaunchScreen.storyboard */,
 				49B0855B21D3C88000D68D85 /* Info.plist */,

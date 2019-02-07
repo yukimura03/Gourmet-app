@@ -17,5 +17,5 @@ enum HTTPMethod : String {
     case patch = "PATCH"
     case trace = "TRACE"
     case options = "OPTIONS"
-    case cot¥nnect = "CONNECT"
+    case connect = "CONNECT"
 }

@@ -26,6 +26,7 @@ final class GnaviAPI {
         var queryItems: [URLQueryItem] {
             return [URLQueryItem(name: "Keyid", value: "a6cababca853c93d265f18664e323093")]
             
+            // 【急募】クエリアイテムを複数設定する方法！
             // ?keyid=\(id)&areacode_l=\(areacode)&hit_per_page=\(hitPerPage)&offset_page=\(offsetPage)
         }
     }
