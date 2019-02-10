@@ -24,9 +24,11 @@ final class GnaviAPI {
         }
         
         var queryItems: [URLQueryItem] {
-            return [URLQueryItem(name: "Keyid", value: "a6cababca853c93d265f18664e323093")]
+            return [URLQueryItem(name: "Keyid", value: "a6cababca853c93d265f18664e323093"),
+                    URLQueryItem(name: "hit_per_page", value: "50"),
+                    URLQueryItem(name: "areacode_l", value: <#T##String?#>),
+                    URLQueryItem(name: "offset_page", value: <#T##String?#>)]
             
-            // 【急募】クエリアイテムを複数設定する方法！
             // ?keyid=\(id)&areacode_l=\(areacode)&hit_per_page=\(hitPerPage)&offset_page=\(offsetPage)
         }
     }

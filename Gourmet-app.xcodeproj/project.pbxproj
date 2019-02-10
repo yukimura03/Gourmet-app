@@ -15,6 +15,8 @@
 		492C3B86220C6DCB0081458A /* GnaviRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C3B85220C6DCB0081458A /* GnaviRequest.swift */; };
 		492C3B88220C6EBD0081458A /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C3B87220C6EBD0081458A /* HTTPMethod.swift */; };
 		492C3B8A220C712F0081458A /* GnaviAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C3B89220C712E0081458A /* GnaviAPI.swift */; };
+		492C3B90221048B40081458A /* GnaviClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C3B8F221048B40081458A /* GnaviClient.swift */; };
+		492C3B92221049C30081458A /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C3B91221049C30081458A /* Result.swift */; };
 		49688CFE21DF505500027BD3 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49688CFD21DF505500027BD3 /* LoadingCell.swift */; };
 		4997EC1521F9ED0800CB253D /* DecodeRestInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4997EC1421F9ED0800CB253D /* DecodeRestInfoModel.swift */; };
 		4997EC1C21F9FC5A00CB253D /* DecodeAreaListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4997EC1B21F9FC5A00CB253D /* DecodeAreaListModel.swift */; };
@@ -42,6 +44,8 @@
 		492C3B85220C6DCB0081458A /* GnaviRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GnaviRequest.swift; sourceTree = "<group>"; };
 		492C3B87220C6EBD0081458A /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		492C3B89220C712E0081458A /* GnaviAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GnaviAPI.swift; sourceTree = "<group>"; };
+		492C3B8F221048B40081458A /* GnaviClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GnaviClient.swift; sourceTree = "<group>"; };
+		492C3B91221049C30081458A /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		49688CFD21DF505500027BD3 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		4997EC1421F9ED0800CB253D /* DecodeRestInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeRestInfoModel.swift; sourceTree = "<group>"; };
 		4997EC1B21F9FC5A00CB253D /* DecodeAreaListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeAreaListModel.swift; sourceTree = "<group>"; };
@@ -97,6 +101,8 @@
 			isa = PBXGroup;
 			children = (
 				492C3B85220C6DCB0081458A /* GnaviRequest.swift */,
+				492C3B8F221048B40081458A /* GnaviClient.swift */,
+				492C3B91221049C30081458A /* Result.swift */,
 				492C3B89220C712E0081458A /* GnaviAPI.swift */,
 				492C3B87220C6EBD0081458A /* HTTPMethod.swift */,
 			);
@@ -327,8 +333,10 @@
 			files = (
 				49FE2DEC21FF226200E8B211 /* Utility.swift in Sources */,
 				492C3B80220C6AB70081458A /* GnaviClientError.swift in Sources */,
+				492C3B92221049C30081458A /* Result.swift in Sources */,
 				49B0856221D509C300D68D85 /* RestaurantsInfoViewController.swift in Sources */,
 				49B0855221D3C87F00D68D85 /* AreaListViewController.swift in Sources */,
+				492C3B90221048B40081458A /* GnaviClient.swift in Sources */,
 				492C3B8A220C712F0081458A /* GnaviAPI.swift in Sources */,
 				492C3B7C220C67C70081458A /* Restaurant.swift in Sources */,
 				49B0855021D3C87F00D68D85 /* AppDelegate.swift in Sources */,
