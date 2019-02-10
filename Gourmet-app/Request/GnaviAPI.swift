@@ -10,7 +10,10 @@ import Foundation
 
 final class GnaviAPI {
     struct SearchRestaurants : GnaviRequest {
-        let keyword: String
+        let keyid: String
+        let hitPerPage: String
+        let areacodeL: String
+        let offsetPage: String
         
         // GnaviRequestが要求する連想型
         typealias Response = GnaviResponse<Restaurant>
@@ -24,10 +27,10 @@ final class GnaviAPI {
         }
         
         var queryItems: [URLQueryItem] {
-            return [URLQueryItem(name: "Keyid", value: "a6cababca853c93d265f18664e323093"),
-                    URLQueryItem(name: "hit_per_page", value: "50"),
-                    URLQueryItem(name: "areacode_l", value: <#T##String?#>),
-                    URLQueryItem(name: "offset_page", value: <#T##String?#>)]
+            return [URLQueryItem(name: "Keyid", value: keyid),
+                    URLQueryItem(name: "hit_per_page", value: hitPerPage),
+                    URLQueryItem(name: "areacode_l", value: areacodeL),
+                    URLQueryItem(name: "offset_page", value: offsetPage)]
             
             // ?keyid=\(id)&areacode_l=\(areacode)&hit_per_page=\(hitPerPage)&offset_page=\(offsetPage)
         }
