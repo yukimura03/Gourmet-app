@@ -56,7 +56,7 @@ final class GetRestData {
             case let .success(response):
                 
                 self.totalHitCount = response.totalHitCount
-                
+                print(response)
                 for data in response.rest {
                     // 店舗情報を取得して配列に入れる処理
                     self.restaurantsData += [data]
@@ -67,7 +67,7 @@ final class GetRestData {
             // 解釈できないレスポンスorそもそもエラーを受け取った
             case let .failure(error):
                 // エラー詳細を出力
-                print()
+                print(error)
             }
         }
         

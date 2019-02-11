@@ -12,7 +12,6 @@ final class AreaListViewController: UIViewController, UITableViewDataSource, UIT
     
     @IBOutlet weak var areaListView: UITableView!
     
-    let areaListModel = AreaListModel()
     let decodeAreaListModel = DecodeAreaListModel()
     
     override func viewDidLoad() {
@@ -49,8 +48,8 @@ final class AreaListViewController: UIViewController, UITableViewDataSource, UIT
         self.areaListView.reloadData()
     }
     
+    // タップしたセルの「エリア名」「エリアコード」を次の画面に渡す
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // タップしたセルの「エリア名」「エリアコード」を次の画面に渡す
         if segue.identifier == "showDetail" {
             if let indexPath = areaListView.indexPathForSelectedRow {
                 let restInfoVC = segue.destination as! RestaurantsInfoViewController

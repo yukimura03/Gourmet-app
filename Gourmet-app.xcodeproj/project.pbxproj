@@ -30,7 +30,7 @@
 		49B0856221D509C300D68D85 /* RestaurantsInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B0856121D509C300D68D85 /* RestaurantsInfoViewController.swift */; };
 		49B0856421D524D100D68D85 /* RestInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B0856321D524D100D68D85 /* RestInfoCell.swift */; };
 		49BD6E3421E7545100E5A3A0 /* AreaInTokyo.json in Resources */ = {isa = PBXBuildFile; fileRef = 49BD6E3321E7545100E5A3A0 /* AreaInTokyo.json */; };
-		49BD6E5821F42FD500E5A3A0 /* AreaListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BD6E5721F42FD500E5A3A0 /* AreaListModel.swift */; };
+		49BD6E5821F42FD500E5A3A0 /* AreaInTokyo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BD6E5721F42FD500E5A3A0 /* AreaInTokyo.swift */; };
 		49FE2DEC21FF226200E8B211 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FE2DEB21FF226200E8B211 /* Utility.swift */; };
 		49FE2E122205A1F300E8B211 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49FE2E112205A1F300E8B211 /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
@@ -62,7 +62,7 @@
 		49B0856121D509C300D68D85 /* RestaurantsInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantsInfoViewController.swift; sourceTree = "<group>"; };
 		49B0856321D524D100D68D85 /* RestInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestInfoCell.swift; sourceTree = "<group>"; };
 		49BD6E3321E7545100E5A3A0 /* AreaInTokyo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = AreaInTokyo.json; sourceTree = "<group>"; };
-		49BD6E5721F42FD500E5A3A0 /* AreaListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaListModel.swift; sourceTree = "<group>"; };
+		49BD6E5721F42FD500E5A3A0 /* AreaInTokyo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaInTokyo.swift; sourceTree = "<group>"; };
 		49FE2DEB21FF226200E8B211 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		49FE2E112205A1F300E8B211 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		898D41D223222657927A126C /* Pods-Gourmet-app.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Gourmet-app.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Gourmet-app/Pods-Gourmet-app.debug.xcconfig"; sourceTree = "<group>"; };
@@ -142,7 +142,7 @@
 		4997EC1821F9F0F400CB253D /* areaListModel */ = {
 			isa = PBXGroup;
 			children = (
-				49BD6E5721F42FD500E5A3A0 /* AreaListModel.swift */,
+				49BD6E5721F42FD500E5A3A0 /* AreaInTokyo.swift */,
 				4997EC1B21F9FC5A00CB253D /* DecodeAreaListModel.swift */,
 			);
 			path = areaListModel;
@@ -164,6 +164,9 @@
 				49B0856121D509C300D68D85 /* RestaurantsInfoViewController.swift */,
 				4997EC1321F9EB9500CB253D /* restaurantsInfoModel */,
 				49BD6E3221E4ECC400E5A3A0 /* Cell */,
+				492C3B78220C66F10081458A /* Error */,
+				492C3B77220C66E80081458A /* Response */,
+				492C3B76220C65D20081458A /* Request */,
 			);
 			path = RestaurantsInfoViewGroup;
 			sourceTree = "<group>";
@@ -193,9 +196,6 @@
 				49FE2DEB21FF226200E8B211 /* Utility.swift */,
 				4997EC1D21FC84C200CB253D /* AreaListViewGroup */,
 				49B0855321D3C87F00D68D85 /* Main.storyboard */,
-				492C3B78220C66F10081458A /* Error */,
-				492C3B77220C66E80081458A /* Response */,
-				492C3B76220C65D20081458A /* Request */,
 				49B0855621D3C88000D68D85 /* Assets.xcassets */,
 				4997EC1E21FC84F200CB253D /* RestaurantsInfoViewGroup */,
 				49B0855821D3C88000D68D85 /* LaunchScreen.storyboard */,
@@ -353,7 +353,7 @@
 				492C3BCC221142210081458A /* GetRestData.swift in Sources */,
 				492C3B82220C6B520081458A /* GnaviAPIError.swift in Sources */,
 				49688CFE21DF505500027BD3 /* LoadingCell.swift in Sources */,
-				49BD6E5821F42FD500E5A3A0 /* AreaListModel.swift in Sources */,
+				49BD6E5821F42FD500E5A3A0 /* AreaInTokyo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
