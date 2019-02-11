@@ -18,7 +18,7 @@ final class RestInfoCell: UITableViewCell {
     @IBOutlet weak var tel: UILabel!
     @IBOutlet weak var budget: UILabel!
     
-    // １つのcellに対して１店舗分のデータだけ渡す
+    /// 1店舗分のデータ（model）を受け取ってcellに表示する
     func setCell(model: Restaurant) {
         let image: UIImage?
         

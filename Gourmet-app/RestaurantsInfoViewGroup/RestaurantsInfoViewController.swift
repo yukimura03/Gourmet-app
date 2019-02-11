@@ -81,15 +81,65 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     
     /* --- テーブルビューの要素--- */
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        switch getRestData.status {
+        // ページを開いて読み込み中の時はloadingCellのみ表示
+        case .loading:
+            return 1
+            
+        // 読み込み完了時はレストラン情報のcellのみ表示
+        case .finish:
+            return 1
+            
+        // 一番下まで来て再読み込みする時はレストラン情報＋loadigCellの両方を表示する
+        case .reloading:
+            return 2
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        switch SectionType(rawValue: section) {
+        
+        case .some(.contents):
+            switch getRestData.status {
+            // 読み込み中の時はloadingCellを１つだけ表示する
+            case .loading:
+                return 1
+            
+            // 読み込み完了時は読み込んだレストラン数分のcellを表示する
+            case .finish:
+                return getRestData.restaurantsData.count
+                
+            // 再読み込み中は読み込んだレストラン数分のcellを表示する
+            case .reloading:
+                return getRestData.restaurantsData.count
+            }
+            
+        case .some(.indicator):
+            // 読み込み中のcellは常に一つだけ
+            return 1
+            
+        case .none:
+            fatalError("section数は３つ以上にはなりません。")
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if getRestData.status == .loading {
+        // エラー処理
+        guard let section = SectionType(rawValue: indexPath.section) else {
+            return tableView.dequeueReusableCell(withIdentifier: "Undefined Section", for: indexPath)
+        }
+        
+        switch section {
+        case .contents:
+            if getRestData.status == .loading {
+                return self.setupIndicatorCell(indexPath: indexPath)
+            } else {
+                return self.setupContentsCell(indexPath: indexPath)
+            }
+            
+        case .indicator:
             return self.setupIndicatorCell(indexPath: indexPath)
-        } else {
-            return self.setupContentsCell(indexPath: indexPath)
         }
     }
     
@@ -97,6 +147,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     /// cellにindicatorを表示させる
     private func setupIndicatorCell(indexPath: IndexPath) -> UITableViewCell {
         let LoadingCell = restInfoView.dequeueReusableCell(withIdentifier: "LoadingCell", for: indexPath) as! LoadingCell
+        
         LoadingCell.indicator.startAnimating() // indicatorを表示させる
         
         return LoadingCell

@@ -11,8 +11,10 @@ import Foundation
 enum StatusType {
     /// 読み込み中
     case loading
+    
     /// 読み込み完了
     case finish
+    
     /// 再読み込み中
     case reloading
 }
