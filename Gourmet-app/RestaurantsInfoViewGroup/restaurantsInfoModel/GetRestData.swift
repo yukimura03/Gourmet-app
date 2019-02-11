@@ -10,21 +10,20 @@ import Foundation
 
 final class GetRestData {
     
-    // MARK: - 外から更新されてここで使う
-    
     /// 表示するページ
     var offsetPage = 1
     
     /// 前の画面で選んだcellのエリアコード
     var areacodeL = ""
     
-    // MARK: - ここで更新して外で参照する
-    
     /// 選んだエリアの総件数
     var totalHitCount = 0
     
     /// 取得してdecodeしたレストランデータを入れる配列
     var restaurantsData = [Restaurant]()
+    
+    /// 正しいレスポンスを受け取ることができたかどうか
+    var getTrueResponse = true
     
     /// 遅延処理をする時に使う
     let dispatchGroup = DispatchGroup()
@@ -55,20 +54,21 @@ final class GetRestData {
             // 正しい形のレスポンスを得られたら
             case let .success(response):
                 
+                self.getTrueResponse = true
                 self.totalHitCount = response.totalHitCount
-                print(response)
+                
                 for data in response.rest {
                     // 店舗情報を取得して配列に入れる処理
                     self.restaurantsData += [data]
                 }
-                // 処理終わりましたの通知
-                self.dispatchGroup.leave()
                 
             // 解釈できないレスポンスorそもそもエラーを受け取った
             case let .failure(error):
-                // エラー詳細を出力
+                self.getTrueResponse = false
                 print(error)
             }
+            // 処理終わりましたの通知
+            self.dispatchGroup.leave()
         }
         
     }

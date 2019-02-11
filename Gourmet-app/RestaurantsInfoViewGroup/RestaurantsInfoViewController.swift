@@ -14,14 +14,14 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     /// レストラン情報をのせるテーブルビュー
     @IBOutlet weak var restInfoView: UITableView!
     
-    let reachability = Reachability()!
-    
     let getRestData = GetRestData()
     
     var areaname = ""
+    
     var areacode = ""
     
     var alertTitle = ""
+    
     var alertMessage = ""
     
     /// 現在のステータス
@@ -38,22 +38,27 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         restInfoView.delegate = self
         restInfoView.dataSource = self
         
+        getRestData.areacodeL = areacode
+        
         // cellの最大の高さを設定
         self.restInfoView.estimatedRowHeight = 100
         self.restInfoView.rowHeight = UITableView.automaticDimension
         
-        getRestData.areacodeL = areacode
-
         // URLを作成してデータを取得、decodeして配列に入れる
         getRestData.getRestDataFromGnaviAPI()
         
         getRestData.dispatchGroup.notify(queue: .main) {
-            self.status = .finish
-            self.navigationItem.title = "\(self.areaname)の飲食店 \(self.getRestData.totalHitCount.withComma)件"
-            self.reloadData()
+            // エラーレスポンスを受け取っていたら
+            if self.getRestData.getTrueResponse == false {
+                self.alertTitle = "エラー"
+                self.alertMessage = "管理者に問い合わせてください"
+                self.showAlert()
+            } else {
+                self.status = .finish
+                self.navigationItem.title = "\(self.areaname)の飲食店 \(self.getRestData.totalHitCount.withComma)件"
+                self.reloadData()
+            }
         }
-        
-        
     }
     
     /// テーブルビューを再読み込みする
@@ -63,8 +68,9 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     
     /// アラートでエラーメッセージを表示させる
     func showAlert(){
-        let alertController = UIAlertController(title: "エラー：\(alertTitle)", message: alertMessage, preferredStyle: .alert)
-        let okButton = UIAlertAction(title: "OK", style: .default) { action in
+        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+        let okButton = UIAlertAction(title: "戻る", style: .default) { action in
+            // 「戻る」を押したらエリア選択画面に戻る
             self.navigationController?.popViewController(animated: true)
         }
         alertController.addAction(okButton)
@@ -73,6 +79,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     
     /// ネットに繋がっているか確認する
     func connectionCheck() {
+        let reachability = Reachability()!
         if reachability.connection == .none {
             alertTitle = "オフライン"
             alertMessage = "通信状況を確認してください"

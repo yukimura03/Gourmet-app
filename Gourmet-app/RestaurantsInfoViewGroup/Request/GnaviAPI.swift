@@ -33,7 +33,6 @@ final class GnaviAPI {
                 URLQueryItem(name: "areacode_l", value: areacodeL),
                 URLQueryItem(name: "offset_page", value: String(offsetPage))
             ]
-            
         }
     }
 }
