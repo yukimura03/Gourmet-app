@@ -27,12 +27,11 @@ final class GnaviAPI {
         }
         
         var queryItems: [URLQueryItem] {
-            return [URLQueryItem(name: "Keyid", value: keyid),
+            return [URLQueryItem(name: "keyid", value: keyid),
                     URLQueryItem(name: "hit_per_page", value: hitPerPage),
                     URLQueryItem(name: "areacode_l", value: areacodeL),
                     URLQueryItem(name: "offset_page", value: offsetPage)]
             
-            // ?keyid=\(id)&areacode_l=\(areacode)&hit_per_page=\(hitPerPage)&offset_page=\(offsetPage)
         }
     }
 }

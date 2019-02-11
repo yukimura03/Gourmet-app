@@ -10,9 +10,8 @@ import Foundation
 
 final class DecodeRestInfoModel {
     
-    let restInfoModel = RestInfoModel()
     /// レストランデータを１店舗ずつ区切って入れる配列
-    var restInfo = [RestInfoModel.restaurantsData]()
+    var restInfo = [String]()
     
     let dispatchGroup = DispatchGroup()
     let dispatchQueue = DispatchQueue(label: "queue")
@@ -49,42 +48,8 @@ final class DecodeRestInfoModel {
     
     /// レストランデータのJSONを取得してdecodeする
     func getRestData() {
-        dispatchGroup.enter() // 処理始めます
-        
-        let url = URL(string: "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=\(id)&areacode_l=\(areacode)&hit_per_page=\(hitPerPage)&offset_page=\(offsetPage)")!
-        
-        // &areacode_l=\(areacode)&hit_per_page=\(hitPerPage)&offset_page=\(offsetPage)
-        
-        let request = URLRequest(url: url)
-        let task = URLSession.shared.dataTask(with: request) { (data, urlResponse, error) in
-            // nilチェック
-            guard let data = data, let urlResponse = urlResponse as? HTTPURLResponse else {
-                // 通信エラーなどの場合
-                return;
-            }
-            do {
-                let decoder = JSONDecoder()
-                
-                if case (200..<300)? = (urlResponse as? HTTPURLResponse)?.statusCode{
-                    let response = try decoder.decode(RestInfoModel.apiData.self, from: data)
-                    
-                    self.restInfo += response.rest
-                    self.totalHitCount = response.total_hit_count
-                    self.status = .finish
-                    
-                } else {
-                    let response = try decoder.decode(RestInfoModel.errorData.self, from: data)
-                    self.errorCode = response.error[0].code
-                    self.errorMessage = response.error[0].message
-                }
-                
-                self.dispatchGroup.leave()
-            } catch {
-                print("error")
-            }
-        }
-        // リクエストを実行
-        task.resume()
+
     }
     
 }
+

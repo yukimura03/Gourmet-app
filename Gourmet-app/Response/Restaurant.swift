@@ -1,5 +1,5 @@
 //
-//  Restaurants.swift
+//  Restaurant.swift
 //  Gourmet-app
 //
 //  Created by minagi on 2019/02/07.
@@ -47,6 +47,7 @@ struct Restaurant : Decodable {
     
     /// サムネ画像のEntity
     struct Image : Decodable {
+        /// 店舗画像
         let shopImage: String
         
         private enum CodingKeys : String, CodingKey {

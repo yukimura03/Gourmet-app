@@ -11,11 +11,11 @@ import Reachability
 
 final class RestaurantsInfoViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    /// レストラン情報をのせるテーブルビュー
     @IBOutlet weak var restInfoView: UITableView!
     
-    let restInfoModel = RestInfoModel()
-    let decodeRestInfoModel = DecodeRestInfoModel()
     let reachability = Reachability()!
+    let getRestData = GetRestData()
     
     var areaname = ""
     var areacode = ""
@@ -31,22 +31,18 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         self.restInfoView.estimatedRowHeight = 100
         self.restInfoView.rowHeight = UITableView.automaticDimension
         
-        // 前の画面で選んだエリア情報をModelに渡す
-        decodeRestInfoModel.areaname = areaname
-        decodeRestInfoModel.areacode = areacode
+        getRestData.areacodeL = areacode
+
+        // URLを作成してデータを取得、decodeして配列に入れる
+        getRestData.getRestDataFromGnaviAPI()
         
-        decodeRestInfoModel.getRestData()
-        // 処理終わりました、を受け取ったら動く
-        decodeRestInfoModel.dispatchGroup.notify(queue: .main){
-            if self.decodeRestInfoModel.errorMessage == "" {
-                self.navigationItem.title = "\(self.decodeRestInfoModel.areaname)の飲食店 \(self.decodeRestInfoModel.totalHitCount.withComma)件"
-                self.reloadData()
-            } else {
-                self.alertTitle = String(self.decodeRestInfoModel.errorCode)
-                self.alertMessage = self.decodeRestInfoModel.errorMessage
-                self.showAlert()
-            }
+        getRestData.dispatchGroup.notify(queue: .main) {
+            self.getRestData.status = .finish
+            self.navigationItem.title = "\(self.areaname)の飲食店 \(self.getRestData.totalHitCount.withComma)件"
+            self.reloadData()
         }
+        
+        
     }
     
     /// テーブルビューを再読み込みする
@@ -83,80 +79,17 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         }
     }
     
-    // 一番下まできたら次のページを読み込む
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        // 読み込み中は動かないように、処理終わりましたを受け取ってから動くようにする
-        decodeRestInfoModel.dispatchGroup.notify(queue: .main) {
-            // 一番下までたどり着いたら
-            if self.restInfoView.contentOffset.y + self.restInfoView.frame.size.height > self.restInfoView.contentSize.height && self.restInfoView.isDragging {
-                
-                // 読み込み中ステータスに変更
-                self.decodeRestInfoModel.status = .reloading
-                // indicatorを表示するためにTableViewを更新する
-                self.reloadData()
-                
-                // APIのアドレスを次のページに更新
-                self.decodeRestInfoModel.offsetPage += 1
-                //レストランデータを取得、更新
-                self.decodeRestInfoModel.getRestData()
-                
-                self.decodeRestInfoModel.dispatchGroup.notify(queue: .main) {
-                    self.decodeRestInfoModel.status = .finish
-                    self.reloadData()
-                }
-            }
-        }
-    }
-    
-    /* --- テーブルビューを作る部分 --- */
-    enum sectionType: Int {
-        case contents = 0
-        case indicator
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        switch decodeRestInfoModel.status {
-        case .loading:
-            return 1
-        case .finish:
-            return 1
-        case .reloading:
-            return 2
-        }
-    }
+    /* --- テーブルビューの要素--- */
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch sectionType(rawValue: section) {
-        case .some(.contents):
-            switch decodeRestInfoModel.status {
-            case .loading:
-                return 1
-            case .finish:
-                return decodeRestInfoModel.restInfo.count
-            case .reloading:
-                return decodeRestInfoModel.restInfo.count
-            }
-        case .some(.indicator):
-            return 1
-        case .none:
-            fatalError("section数は３以上にはなりません。")
-        }
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // エラー処理
-        guard let safeSection = sectionType(rawValue: indexPath.section) else {
-            return tableView.dequeueReusableCell(withIdentifier: "Undefined Section", for: indexPath)
-        }
-        switch safeSection {
-        case .contents:
-            if decodeRestInfoModel.status == .loading {
-                return self.setupIndicatorCell(indexPath: indexPath)
-            } else {
-                return self.setupContentsCell(indexPath: indexPath)
-            }
-        case .indicator:
+        if getRestData.status == .loading {
             return self.setupIndicatorCell(indexPath: indexPath)
+        } else {
+            return self.setupContentsCell(indexPath: indexPath)
         }
     }
     
@@ -174,8 +107,9 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         // 1つ目のセクションの中身
         let cell = restInfoView.dequeueReusableCell(withIdentifier: "RestInfoCell", for: indexPath) as! RestInfoCell
         
-        cell.setCell(model: decodeRestInfoModel.restInfo[indexPath.row])
+        cell.setCell(model: getRestData.restaurantsData[indexPath.row])
         
         return cell
     }
+    
 }

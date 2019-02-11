@@ -13,10 +13,10 @@ struct GnaviResponse<Restaurant: Decodable> : Decodable  {
     let totalHitCount: Int
     
     // レストランデータ
-    let restaurants: [Restaurant]
+    let rest: [Restaurant]
     
     enum CodingKeys : String, CodingKey {
         case totalHitCount = "total_hit_count"
-        case restaurants
+        case rest
     }
 }

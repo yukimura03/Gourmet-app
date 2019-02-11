@@ -19,7 +19,7 @@ final class RestInfoCell: UITableViewCell {
     @IBOutlet weak var budget: UILabel!
     
     // １つのcellに対して１店舗分のデータだけ渡す
-    func setCell(model: RestInfoModel.restaurantsData) {
+    func setCell(model: Restaurant) {
         let image: UIImage?
         
         let urlString = model.imageUrl.shopImage
@@ -42,4 +42,5 @@ final class RestInfoCell: UITableViewCell {
         budget.text = "¥\((model.budget).withComma)"
         
     }
+ 
 }
