@@ -9,7 +9,7 @@
 import Foundation
 
 struct GnaviAPIError : Decodable, Error {
-    let errorMessage: [ErrorMessage]
+    let error: [ErrorMessage]
     
     struct ErrorMessage : Codable {
         let code: Int

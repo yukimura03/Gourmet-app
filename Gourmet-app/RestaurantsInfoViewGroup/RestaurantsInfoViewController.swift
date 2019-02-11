@@ -15,14 +15,25 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     @IBOutlet weak var restInfoView: UITableView!
     
     let reachability = Reachability()!
+    
     let getRestData = GetRestData()
     
     var areaname = ""
     var areacode = ""
+    
+    var alertTitle = ""
+    var alertMessage = ""
+    
+    /// 現在のステータス
+    var status: StatusType = .finish
+    
+    // MARK: -
 
     override func viewDidLoad() {
         super.viewDidLoad()
         connectionCheck()
+        
+        status = .loading
         
         restInfoView.delegate = self
         restInfoView.dataSource = self
@@ -37,7 +48,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         getRestData.getRestDataFromGnaviAPI()
         
         getRestData.dispatchGroup.notify(queue: .main) {
-            self.getRestData.status = .finish
+            self.status = .finish
             self.navigationItem.title = "\(self.areaname)の飲食店 \(self.getRestData.totalHitCount.withComma)件"
             self.reloadData()
         }
@@ -49,9 +60,6 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     func reloadData() {
         self.restInfoView.reloadData()
     }
-    
-    var alertTitle = ""
-    var alertMessage = ""
     
     /// アラートでエラーメッセージを表示させる
     func showAlert(){
@@ -79,10 +87,38 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         }
     }
     
+    // 一番下まできたら次のページを読み込む
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        // 読み込み中は動かないように、処理終わりましたを受け取ってから動くようにする
+        getRestData.dispatchGroup.notify(queue: .main) {
+            // 一番下までたどり着いたら
+            if self.restInfoView.contentOffset.y + self.restInfoView.frame.size.height > self.restInfoView.contentSize.height && self.restInfoView.isDragging {
+                
+                // 再読み込み中ステータスに変更
+                self.status = .reloading
+                
+                // indicatorを表示するためにTableViewを更新する
+                self.reloadData()
+                
+                // APIのアドレスを次のページに更新
+                self.getRestData.offsetPage += 1
+                
+                //レストランデータを取得、更新
+                self.getRestData.getRestDataFromGnaviAPI()
+                
+                // 処理終了を受け取ったらステータスを変え、TableViewを更新する
+                self.getRestData.dispatchGroup.notify(queue: .main) {
+                    self.status = .finish
+                    self.reloadData()
+                }
+            }
+        }
+    }
+    
     /* --- テーブルビューの要素--- */
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        switch getRestData.status {
+        switch status {
         // ページを開いて読み込み中の時はloadingCellのみ表示
         case .loading:
             return 1
@@ -101,7 +137,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         switch SectionType(rawValue: section) {
         
         case .some(.contents):
-            switch getRestData.status {
+            switch status {
             // 読み込み中の時はloadingCellを１つだけ表示する
             case .loading:
                 return 1
@@ -132,7 +168,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         
         switch section {
         case .contents:
-            if getRestData.status == .loading {
+            if status == .loading {
                 return self.setupIndicatorCell(indexPath: indexPath)
             } else {
                 return self.setupContentsCell(indexPath: indexPath)

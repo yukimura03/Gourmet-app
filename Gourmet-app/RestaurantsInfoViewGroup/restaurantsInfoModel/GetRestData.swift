@@ -10,11 +10,7 @@ import Foundation
 
 final class GetRestData {
     
-    /// 自分で発行したKey
-    let keyid = "a6cababca853c93d265f18664e323093"
-    
-    /// １ページに載せる店舗数
-    let hitPerPage = 50
+    // MARK: - 外から更新されてここで使う
     
     /// 表示するページ
     var offsetPage = 1
@@ -22,21 +18,29 @@ final class GetRestData {
     /// 前の画面で選んだcellのエリアコード
     var areacodeL = ""
     
+    // MARK: - ここで更新して外で参照する
+    
     /// 選んだエリアの総件数
     var totalHitCount = 0
     
-    /// 現在の状態
-    var status: StatusType = .loading
-    
-    let dispatchGroup = DispatchGroup()
-    let dispatchQueue = DispatchQueue(label: "queue")
-    
+    /// 取得してdecodeしたレストランデータを入れる配列
     var restaurantsData = [Restaurant]()
     
+    /// 遅延処理をする時に使う
+    let dispatchGroup = DispatchGroup()
     
+    // MARK: -
+    
+    /// urlを作成して、情報を取り出して、decodeして、配列に入れる
     func getRestDataFromGnaviAPI() {
         // 処理始めます
         dispatchGroup.enter()
+        
+        /// 発行したAPIKey
+        let keyid = "a6cababca853c93d265f18664e323093"
+        
+        /// １ページに載せる店舗数
+        let hitPerPage = 50
         
         // APIクライアントの生成
         let client = GnaviClient()
@@ -50,7 +54,9 @@ final class GetRestData {
                 
             // 正しい形のレスポンスを得られたら
             case let .success(response):
+                
                 self.totalHitCount = response.totalHitCount
+                
                 for data in response.rest {
                     // 店舗情報を取得して配列に入れる処理
                     self.restaurantsData += [data]
@@ -61,12 +67,8 @@ final class GetRestData {
             // 解釈できないレスポンスorそもそもエラーを受け取った
             case let .failure(error):
                 // エラー詳細を出力
-                print("どこかがおかしい: ", error)
+                print()
             }
-        }
-        
-        dispatchGroup.notify(queue: .main) {
-            print(self.restaurantsData)
         }
         
     }

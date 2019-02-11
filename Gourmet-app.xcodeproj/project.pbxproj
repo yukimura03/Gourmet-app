@@ -102,7 +102,6 @@
 		492C3B76220C65D20081458A /* Request */ = {
 			isa = PBXGroup;
 			children = (
-				492C3BCD221144890081458A /* StatusType.swift */,
 				492C3B85220C6DCB0081458A /* GnaviRequest.swift */,
 				492C3B8F221048B40081458A /* GnaviClient.swift */,
 				492C3B91221049C30081458A /* Result.swift */,
@@ -133,6 +132,8 @@
 		4997EC1321F9EB9500CB253D /* restaurantsInfoModel */ = {
 			isa = PBXGroup;
 			children = (
+				492C3BCD221144890081458A /* StatusType.swift */,
+				492C3BCF2211883A0081458A /* SectionType.swift */,
 				492C3BCB221142210081458A /* GetRestData.swift */,
 			);
 			path = restaurantsInfoModel;
@@ -161,9 +162,8 @@
 			isa = PBXGroup;
 			children = (
 				49B0856121D509C300D68D85 /* RestaurantsInfoViewController.swift */,
-				492C3BCF2211883A0081458A /* SectionType.swift */,
 				4997EC1321F9EB9500CB253D /* restaurantsInfoModel */,
-				49BD6E3221E4ECC400E5A3A0 /* CellView */,
+				49BD6E3221E4ECC400E5A3A0 /* Cell */,
 			);
 			path = RestaurantsInfoViewGroup;
 			sourceTree = "<group>";
@@ -204,13 +204,13 @@
 			path = "Gourmet-app";
 			sourceTree = "<group>";
 		};
-		49BD6E3221E4ECC400E5A3A0 /* CellView */ = {
+		49BD6E3221E4ECC400E5A3A0 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
 				49B0856321D524D100D68D85 /* RestInfoCell.swift */,
 				49688CFD21DF505500027BD3 /* LoadingCell.swift */,
 			);
-			path = CellView;
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

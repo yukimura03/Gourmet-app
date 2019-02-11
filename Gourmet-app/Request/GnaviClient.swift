@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GnaviClient {
+final class GnaviClient {
     private let session: URLSession = {
         let configuration = URLSessionConfiguration.default
         let session = URLSession(configuration: configuration)
