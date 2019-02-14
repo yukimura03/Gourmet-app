@@ -20,10 +20,6 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     
     var areacode = ""
     
-    var alertTitle = ""
-    
-    var alertMessage = ""
-    
     /// 現在のステータス
     var status: StatusType = .finish
     
@@ -50,9 +46,9 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         getRestData.dispatchGroup.notify(queue: .main) {
             // エラーレスポンスを受け取っていたら
             if self.getRestData.getTrueResponse == false {
-                self.alertTitle = "エラー"
-                self.alertMessage = "管理者に問い合わせてください"
-                self.showAlert()
+                let title = "エラー"
+                let message = "管理者に問い合わせてください"
+                self.showAlert(title: title, message: message)
             } else {
                 self.status = .finish
                 self.navigationItem.title = "\(self.areaname)の飲食店 \(self.getRestData.totalHitCount.withComma)件"
@@ -66,9 +62,19 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         self.restInfoView.reloadData()
     }
     
+    /// ネットに繋がっているか確認する
+    func connectionCheck() {
+        let reachability = Reachability()!
+        if reachability.connection == .none {
+            let title = "オフライン"
+            let message = "通信状況を確認してください"
+            showAlert(title: title, message: message)
+        }
+    }
+    
     /// アラートでエラーメッセージを表示させる
-    func showAlert(){
-        let alertController = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: .alert)
+    func showAlert(title: String, message: String){
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okButton = UIAlertAction(title: "戻る", style: .default) { action in
             // 「戻る」を押したらエリア選択画面に戻る
             self.navigationController?.popViewController(animated: true)
@@ -77,15 +83,6 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         self.present(alertController, animated: true, completion: nil)
     }
     
-    /// ネットに繋がっているか確認する
-    func connectionCheck() {
-        let reachability = Reachability()!
-        if reachability.connection == .none {
-            alertTitle = "オフライン"
-            alertMessage = "通信状況を確認してください"
-            showAlert()
-        }
-    }
     
     // 選択したセルのハイライトを消す
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
