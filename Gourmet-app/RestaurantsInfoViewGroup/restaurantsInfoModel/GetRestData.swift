@@ -12,7 +12,7 @@ final class GetRestData {
     
     var dispatchGroup = DispatchGroup()
     
-    /// urlを作成して、情報を取り出して、decodeして、配列に入れる
+    /// リクエストを発行・送信し、responseを受け取る
     func fromGnaviAPI(areacodeL: String, offsetPage: Int, completion: @escaping (_ response: GnaviResponse<Restaurant>?) -> Void) {
         
         dispatchGroup.enter()
@@ -47,14 +47,9 @@ final class GetRestData {
                 
                 completion(nil)
                 print(error)
-
             }
-
         }
-
     }
-    
-    
 }
 
 

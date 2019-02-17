@@ -66,6 +66,5 @@ final class AreaListViewController: UIViewController, UITableViewDataSource, UIT
             areaListView.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
     }
-    
 }
 

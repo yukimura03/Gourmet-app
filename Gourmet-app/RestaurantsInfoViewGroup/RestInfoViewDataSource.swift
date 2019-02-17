@@ -11,18 +11,13 @@ import UIKit
 
 class RestInfoViewDataSource: NSObject, UITableViewDataSource {
     
-    var restDataEntity = RestDataEntity()
-    
-    var num = 0
-    
-    /// 取得してdecodeしたレストランデータを入れる配列
+    /// レストランデータを入れる配列
     var restaurantsData = [Restaurant]()
     
     /// 現在のステータス
     var status: StatusType = .loading
     
     /* --- テーブルビューの要素--- */
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         switch status {
         // ページを開いて読み込み中の時はloadingCellのみ表示
@@ -50,12 +45,11 @@ class RestInfoViewDataSource: NSObject, UITableViewDataSource {
                 
             // 読み込み完了時は読み込んだレストラン数分のcellを表示する
             case .finish:
-                print("ここ", restaurantsData.count)
                 return restaurantsData.count
                 
             // 再読み込み中は読み込んだレストラン数分のcellを表示する
             case .reloading:
-                return restDataEntity.restaurantsData.count
+                return restaurantsData.count
             }
             
         case .some(.indicator):
