@@ -16,6 +16,7 @@ final class GetRestData {
     func fromGnaviAPI(areacodeL: String, offsetPage: Int, completion: @escaping (_ response: GnaviResponse<Restaurant>?) -> Void) {
         
         dispatchGroup.enter()
+        
         /// 発行したAPIKey
         let keyid = "a6cababca853c93d265f18664e323093"
         

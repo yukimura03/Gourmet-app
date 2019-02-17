@@ -47,7 +47,6 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
                 self.showAlert(title: title, message: message)
                 return print ("error")
             }
-            //self.restDataEntity.dispatchGroup.enter()
             
             // 正しいレスポンスを受け取ることができていた場合、
             // RestaurantsDataの配列に入れるメソッドを呼ぶ
@@ -59,6 +58,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
             // データ取得と変数に代入する処理が終わったら、
             // navigationBarにエリア名と店舗総数を表示する
             self.dataSource.status = .finish
+            self.dataSource.restaurantsData = self.restDataEntity.restaurantsData
             self.reloadData()
             self.navigationItem.title = "\(self.areaname)の飲食店 \(self.restDataEntity.totalHitCount.withComma)件"
         }
@@ -113,11 +113,11 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
             restInfoView.deselectRow(at: indexPathForSelectedRow, animated: true)
         }
     }
-    
+    /*
     // 一番下まできたら次のページを読み込む
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // 読み込み中は動かないように、処理終わりましたを受け取ってから動くようにする
-        restDataEntity.dispatchGroup.notify(queue: .main) {
+        getRestData.dispatchGroup.notify(queue: .main) {
             // 一番下までたどり着いたら
             if self.restInfoView.contentOffset.y + self.restInfoView.frame.size.height > self.restInfoView.contentSize.height && self.restInfoView.isDragging {
                 
@@ -134,13 +134,13 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
                 //self.getRestData.getRestDataFromGnaviAPI()
                 
                 // 処理終了を受け取ったらステータスを変え、TableViewを更新する
-                self.restDataEntity.dispatchGroup.notify(queue: .main) {
+                self.getRestData.dispatchGroup.notify(queue: .main) {
                     self.dataSource.status = .finish
                     self.reloadData()
                 }
             }
         }
-    }
+    }*/
     
     
     
