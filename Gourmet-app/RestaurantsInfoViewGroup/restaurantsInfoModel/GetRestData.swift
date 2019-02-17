@@ -33,7 +33,7 @@ final class GetRestData {
     /// urlを作成して、情報を取り出して、decodeして、配列に入れる
     func getRestDataFromGnaviAPI() {
         // 処理始めます
-        dispatchGroup.enter()
+        //dispatchGroup.enter()
         
         /// 発行したAPIKey
         let keyid = "a6cababca853c93d265f18664e323093"
@@ -54,23 +54,22 @@ final class GetRestData {
             // 正しい形のレスポンスを得られたら
             case let .success(response):
                 
-                self.getTrueResponse = true
-                self.totalHitCount = response.totalHitCount
+                //VCのデリゲートメソッドが呼ばれる
+                let restInfoVC = RestaurantsInfoViewController()
                 
-                for data in response.rest {
-                    // 店舗情報を取得して配列に入れる処理
-                    self.restaurantsData += [data]
-                }
+                restInfoVC.dataIntoArray(response: response)
                 
             // 解釈できないレスポンスorそもそもエラーを受け取った
             case let .failure(error):
                 self.getTrueResponse = false
                 print(error)
+                
+                self.dispatchGroup.leave()
             }
             // 処理終わりましたの通知
             self.dispatchGroup.leave()
         }
-        
+
     }
     
     

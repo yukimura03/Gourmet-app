@@ -20,6 +20,7 @@
 		492C3BCC221142210081458A /* GetRestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C3BCB221142210081458A /* GetRestData.swift */; };
 		492C3BCE221144890081458A /* StatusType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C3BCD221144890081458A /* StatusType.swift */; };
 		492C3BD02211883A0081458A /* SectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C3BCF2211883A0081458A /* SectionType.swift */; };
+		492C3BDA2215C01D0081458A /* RestInfoViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492C3BD92215C01D0081458A /* RestInfoViewDataSource.swift */; };
 		49688CFE21DF505500027BD3 /* LoadingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49688CFD21DF505500027BD3 /* LoadingCell.swift */; };
 		4997EC1C21F9FC5A00CB253D /* DecodeAreaListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4997EC1B21F9FC5A00CB253D /* DecodeAreaListModel.swift */; };
 		49B0855021D3C87F00D68D85 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B0854F21D3C87F00D68D85 /* AppDelegate.swift */; };
@@ -50,6 +51,7 @@
 		492C3BCB221142210081458A /* GetRestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetRestData.swift; sourceTree = "<group>"; };
 		492C3BCD221144890081458A /* StatusType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusType.swift; sourceTree = "<group>"; };
 		492C3BCF2211883A0081458A /* SectionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionType.swift; sourceTree = "<group>"; };
+		492C3BD92215C01D0081458A /* RestInfoViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestInfoViewDataSource.swift; sourceTree = "<group>"; };
 		49688CFD21DF505500027BD3 /* LoadingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCell.swift; sourceTree = "<group>"; };
 		4997EC1B21F9FC5A00CB253D /* DecodeAreaListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeAreaListModel.swift; sourceTree = "<group>"; };
 		49B0854C21D3C87F00D68D85 /* Gourmet-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Gourmet-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				49B0856121D509C300D68D85 /* RestaurantsInfoViewController.swift */,
+				492C3BD92215C01D0081458A /* RestInfoViewDataSource.swift */,
 				4997EC1321F9EB9500CB253D /* restaurantsInfoModel */,
 				49BD6E3221E4ECC400E5A3A0 /* Cell */,
 				492C3B78220C66F10081458A /* Error */,
@@ -345,6 +348,7 @@
 				492C3B8A220C712F0081458A /* GnaviAPI.swift in Sources */,
 				492C3B7C220C67C70081458A /* Restaurant.swift in Sources */,
 				49B0855021D3C87F00D68D85 /* AppDelegate.swift in Sources */,
+				492C3BDA2215C01D0081458A /* RestInfoViewDataSource.swift in Sources */,
 				492C3B7E220C685C0081458A /* APIResponse.swift in Sources */,
 				4997EC1C21F9FC5A00CB253D /* DecodeAreaListModel.swift in Sources */,
 				49B0856421D524D100D68D85 /* RestInfoCell.swift in Sources */,
