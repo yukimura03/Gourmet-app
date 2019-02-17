@@ -11,22 +11,13 @@ import UIKit
 
 class RestInfoViewDataSource: NSObject, UITableViewDataSource {
     
-    /// 取得してdecodeしたレストランデータを入れる配列
-    var restaurantsData = [Restaurant]()
-    
     var getRestData = GetRestData()
-    
-    var totalHitCount = 0
+    var restDataEntity = RestDataEntity()
     
     /// 現在のステータス
     var status: StatusType = .loading
     
     /* --- テーブルビューの要素--- */
-    
-    func tableView(_ tableView: UITableView,
-                   titleForHeaderInSection section: Int) -> String? {
-        return String(restaurantsData.count)
-    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         switch status {
@@ -55,11 +46,11 @@ class RestInfoViewDataSource: NSObject, UITableViewDataSource {
                 
             // 読み込み完了時は読み込んだレストラン数分のcellを表示する
             case .finish:
-                return getRestData.restaurantsData.count
+                return restDataEntity.restaurantsData.count
                 
             // 再読み込み中は読み込んだレストラン数分のcellを表示する
             case .reloading:
-                return getRestData.restaurantsData.count
+                return restDataEntity.restaurantsData.count
             }
             
         case .some(.indicator):
@@ -105,7 +96,7 @@ class RestInfoViewDataSource: NSObject, UITableViewDataSource {
         // 1つ目のセクションの中身
         let cell = tableView.dequeueReusableCell(withIdentifier: "RestInfoCell", for: indexPath) as! RestInfoCell
         
-        cell.setCell(model: getRestData.restaurantsData[indexPath.row])
+        cell.setCell(model: restDataEntity.restaurantsData[indexPath.row])
         return cell
     }
 }
