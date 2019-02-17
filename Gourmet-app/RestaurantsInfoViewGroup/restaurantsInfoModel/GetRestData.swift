@@ -31,10 +31,8 @@ final class GetRestData {
     // MARK: -
     
     /// urlを作成して、情報を取り出して、decodeして、配列に入れる
-    func getRestDataFromGnaviAPI() {
-        // 処理始めます
-        //dispatchGroup.enter()
-        
+    func getRestDataFromGnaviAPI(completion: @escaping (_ response: GnaviResponse<Restaurant>?) -> Void) {
+        dispatchGroup.enter()
         /// 発行したAPIKey
         let keyid = "a6cababca853c93d265f18664e323093"
         
@@ -47,27 +45,29 @@ final class GetRestData {
         // リクエストの発行
         let request = GnaviAPI.SearchRestaurants(keyid: keyid, hitPerPage: String(hitPerPage), areacodeL: areacodeL, offsetPage: String(offsetPage))
         
+        
         // リクエストの送信
         client.send(request: request) { result in
             switch result {
                 
             // 正しい形のレスポンスを得られたら
             case let .success(response):
+                self.getTrueResponse = true
                 
-                //VCのデリゲートメソッドが呼ばれる
-                let restInfoVC = RestaurantsInfoViewController()
-                
-                restInfoVC.dataIntoArray(response: response)
+                // コールバック
+                completion(response)
                 
             // 解釈できないレスポンスorそもそもエラーを受け取った
             case let .failure(error):
                 self.getTrueResponse = false
+                
+                completion(nil)
                 print(error)
                 
                 self.dispatchGroup.leave()
             }
             // 処理終わりましたの通知
-            self.dispatchGroup.leave()
+            //self.dispatchGroup.leave()
         }
 
     }

@@ -38,35 +38,40 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
         getRestData.areacodeL = areacode
         
         // URLを作成してデータを取得、decodeして配列に入れる
-        getRestData.getRestDataFromGnaviAPI()
-        getRestData.dispatchGroup.enter()
-        
-        getRestData.dispatchGroup.notify(queue: .main) {
-            // エラーレスポンスを受け取っていたら
-            if self.getRestData.getTrueResponse == false {
+        getRestData.getRestDataFromGnaviAPI() { response in
+            
+            // もしエラー（コールバックされたものがnil）だった場合、エラーメッセージを表示させる
+            guard let response = response else {
                 let title = "エラー"
                 let message = "管理者に問い合わせてください"
                 self.showAlert(title: title, message: message)
-            } else {
-                self.dataSource.status = .finish
-                self.reloadData()
-                print("totalHitCount2: ", self.getRestData.totalHitCount, "RestDataCount2: ", self.getRestData.restaurantsData.count)
-                self.navigationItem.title = "\(self.areaname)の飲食店 \(self.getRestData.totalHitCount.withComma)件"
-                
+                return print ("error")
             }
+                // 正しいレスポンスを受け取ることができていた場合、
+                // RestaurantsDataの配列に入れるメソッドを呼ぶ
+                self.insertResponseIntoRestaurantsData(response: response)
         }
+        
+        getRestData.dispatchGroup.notify(queue: .main) {
+            // データ取得と変数に代入する処理が終わったら、
+            // navigationBarにエリア名と店舗総数を表示する
+            self.navigationItem.title = "\(self.areaname)の飲食店 \(self.getRestData.totalHitCount.withComma)件"
+        }
+        
     }
     
-    func dataIntoArray(response: GnaviResponse<Restaurant>) {
+    /// レスポンスから総店舗数とレストランのデータを取り出し、
+    /// totalHitCount（変数）とrestaurantsData（配列）に入れる
+    func insertResponseIntoRestaurantsData(response: GnaviResponse<Restaurant>) {
 
         getRestData.totalHitCount = response.totalHitCount
-        print("totalHitCount: " , getRestData.totalHitCount)
         
         for data in response.rest {
             // 店舗情報を取得して配列に入れる処理
             getRestData.restaurantsData += [data]
         }
-        print("restDataCount: ", getRestData.restaurantsData.count)
+
+        self.getRestData.dispatchGroup.leave()
         
     }
     
@@ -121,7 +126,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
                 self.getRestData.offsetPage += 1
                 
                 //レストランデータを取得、更新
-                self.getRestData.getRestDataFromGnaviAPI()
+                //self.getRestData.getRestDataFromGnaviAPI()
                 
                 // 処理終了を受け取ったらステータスを変え、TableViewを更新する
                 self.getRestData.dispatchGroup.notify(queue: .main) {
