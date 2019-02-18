@@ -49,7 +49,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     }
     
     /// ネットに繋がっているか確認する
-    private func connectionCheck() {
+    func connectionCheck() {
         let reachability = Reachability()!
         if reachability.connection == .none {
             let title = "オフライン"
@@ -59,7 +59,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     }
     
     /// リクエストを発行してレスポンスを受け取る
-    private func getResponse() {
+    func getResponse() {
         getRestData.fromGnaviAPI(areacodeL: areacode, offsetPage: restDataEntity.offsetPage) { response in
             // もしエラー（コールバックされたものがnil）だった場合、エラーメッセージを表示させる
             guard let response = response else {
@@ -77,7 +77,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     
     /// レスポンスから総店舗数とレストランのデータを取り出し、
     /// totalHitCount（変数）とrestaurantsData（配列）に入れる
-    private func insertResponseIntoRestaurantsData(response: GnaviResponse<Restaurant>) {
+    func insertResponseIntoRestaurantsData(response: GnaviResponse<Restaurant>) {
         restDataEntity.totalHitCount = response.totalHitCount
         
         for data in response.rest {
@@ -88,18 +88,18 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     }
     
     /// テーブルビューを再読み込みする
-    private func reloadData() {
+    func reloadData() {
         self.restInfoView.reloadData()
     }
     
     /// statusを.finishに変更し、リロードしてレストランデータが乗ったcellを表示させる
-    private func showRestInfoCell() {
+    func showRestInfoCell() {
         self.dataSource.status = .finish
         self.reloadData()
     }
     
     /// アラートでエラーメッセージを表示させる
-    private func showAlert(title: String, message: String){
+    func showAlert(title: String, message: String){
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let okButton = UIAlertAction(title: "戻る", style: .default) { action in
             // 「戻る」を押したらエリア選択画面に戻る
@@ -117,7 +117,7 @@ final class RestaurantsInfoViewController : UIViewController, UITableViewDelegat
     }
     
     // 一番下まできたら次のページを読み込む
-    private func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         // 読み込み中は動かないように、処理終わりましたを受け取ってから動くようにする
         getRestData.dispatchGroup.notify(queue: .main) {
             // 一番下までたどり着いたら
